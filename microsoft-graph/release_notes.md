@@ -1,8 +1,4 @@
-#### What's Improved
-- Added the following new operations and playbooks: 
-    - Revoke User Session
-    - Get All Named Locations
-    - Block New IP Ranges
-- Upgraded connector dependency from adal to msal.
-- Added `Page Size` and `Offset` parameters in `Search Message in Users Mailbox` action.
-- removed `Update Time Closed` parameter from `Update Security Alert` action.
+#### What's Improved 1.2.0
+- Now supports Delegate and application access token type
+- Added `Unblock IP`action
+- Added `Create IP Range Location`action

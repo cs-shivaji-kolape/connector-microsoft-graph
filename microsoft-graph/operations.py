@@ -10,26 +10,22 @@ from queue import Queue
 from threading import Thread
 import threading
 import requests
-from msal import ConfidentialClientApplication
-from time import time, ctime
-from datetime import datetime
-from connectors.core.utils import update_connnector_config
+import re
+import logging
+from time import time
 from .constants import *
+from .microsoft_api_auth import *
 
 
 logger = get_logger('microsoft_graph')
-
+#logger.setLevel(logging.DEBUG) # Uncomment to enable local debug
 
 class SetupSession(object):
     def __init__(self, config):
-        self.tenant = config.get('tenant')
-        self.client_id = config.get('client_id')
-        self.client_secret = config.get('client_secret')
-        self.verify_ssl = config.get('verify_ssl')
-        self.authority = "https://login.microsoftonline.com/" + self.tenant
-        self.scope = '{0}/.default'.format(RESOURCE)
         self.connector_info = config.get('connector_info')
-        self.token = self.acquire_validated_token(config)
+        ms = MicrosoftAuth(config)
+        self.verify_ssl = ms.verify_ssl
+        self.token = ms.validate_token(config, self.connector_info)
         self.__setupSession()
 
     def __setupSession(self):
@@ -47,58 +43,6 @@ class SetupSession(object):
         except Exception as e:
             logger.exception('{0}'.format(e))
             raise ConnectorError('{0}'.format(e))
-
-    def convert_ts_epoch(self, ts):
-        datetime_object = datetime.strptime(ctime(ts), "%a %b %d %H:%M:%S %Y")
-        return datetime_object.timestamp()
-
-    def generate_token(self):
-        try:
-            client = ConfidentialClientApplication(
-                self.client_id,
-                authority=self.authority,
-                client_credential=self.client_secret)
-            resp = client.acquire_token_for_client(SCOPE)
-            error_description = resp.get("error_description")
-            if not error_description:
-                ts_now = time()
-                resp['expiresOn'] = (ts_now + resp['expires_in']) if resp.get("expires_in") else None
-                resp['accessToken'] = resp.get("access_token")
-                resp.pop("access_token")
-                return resp
-            else:
-                logger.error("{0}".format(error_description))
-                raise ConnectorError(error_description[error_description.find(":") + 1:error_description.find("\r\n")])
-        except Exception as err:
-            logger.error("{0}".format(err))
-            raise ConnectorError("{0}".format(err))
-
-    def acquire_validated_token(self, connector_config):
-        connector_info = self.connector_info
-        if connector_config.get("accessToken"):
-            connector_info = self.connector_info
-            ts_now = time()
-            expires = connector_config['expiresOn']
-            expires_ts = self.convert_ts_epoch(expires)
-            if ts_now > float(expires_ts):
-                logger.info("Token expired at {0}".format(expires))
-                token_resp = self.generate_token()
-                connector_config['accessToken'] = token_resp['accessToken']
-                connector_config['expiresOn'] = token_resp['expiresOn']
-                connector_config['refresh_token'] = token_resp.get('refresh_token')
-                update_connnector_config(connector_info['connector_name'], connector_info['connector_version'],
-                                         connector_config,
-                                         connector_config['config_id'])
-        else:
-            token_resp = self.generate_token()
-            connector_config['accessToken'] = token_resp['accessToken']
-            connector_config['expiresOn'] = token_resp['expiresOn']
-            connector_config['refresh_token'] = token_resp.get('refresh_token')
-            update_connnector_config(connector_info['connector_name'], connector_info['connector_version'],
-                                     connector_config,
-                                     connector_config['config_id'])
-        logger.info("Token is valid till {0}".format(connector_config['expiresOn']))
-        return "Bearer {0}".format(connector_config['accessToken'])
 
 
 class ThreadCreate(object):
@@ -429,6 +373,7 @@ def revoke_user_sessions(config, params):
 
 
 def block_new_ips(config, params):
+    operation = params.get('operation')
     microsoft_graph = SetupSession(config)
     graph_api_endpoint = '{0}/{1}'.format(RESOURCE, config.get('api_version'))
     named_location_uuid = params.get('namedLocationUuid')
@@ -443,23 +388,28 @@ def block_new_ips(config, params):
     ipranges_graph_content = response['ipRanges']
     ipv4_ips = params.get('ipv4_ips')
     ipv6_ips = params.get('ipv6_ips')
-
-    if ipv4_ips:
-        ipv4_ips = ipv4_ips.split(',')
-        for ip in ipv4_ips:
-            NewIPAddress = {
-                "@odata.type": IPv4,
-                "cidrAddress": ip.strip()
-            }
-            ipranges_graph_content.append(NewIPAddress)
-    if ipv6_ips:
-        ipv6_ips = ipv6_ips.split(',')
-        for ip in ipv6_ips:
-            NewIPAddress = {
-                "@odata.type": IPv6,
-                "cidrAddress": ip.strip()
-            }
-            ipranges_graph_content.append(NewIPAddress)
+    if operation == 'block_new_ips':
+        if ipv4_ips:
+            ipv4_ips = ipv4_ips.split(',')
+            for ip in ipv4_ips:
+                NewIPAddress = {
+                    "@odata.type": IPv4,
+                    "cidrAddress": ip.strip()
+                }
+                ipranges_graph_content.append(NewIPAddress)
+        if ipv6_ips:
+            ipv6_ips = ipv6_ips.split(',')
+            for ip in ipv6_ips:
+                NewIPAddress = {
+                    "@odata.type": IPv6,
+                    "cidrAddress": ip.strip()
+                }
+                ipranges_graph_content.append(NewIPAddress)
+    elif operation == 'unblock_new_ips':
+        ips_to_block = params.get('ipv4_ips').split(',') + params.get('ipv6_ips').split(',')
+        ipranges_graph_content[:] = [entry for entry in ipranges_graph_content if entry.get('cidrAddress') not in ips_to_block]
+        if ipranges_graph_content == 0:
+            raise ConnectorError("No IP Addresses to unblock")
     newData = {
         "@odata.type": "#microsoft.graph.ipNamedLocation",
         "isTrusted": False,
@@ -504,16 +454,36 @@ def get_all_named_locations(config, params):
             'Fail To request API {0} response is :{1} with reason: {2}'.format(str(url), str(response.content),
                                                                                str(response.reason)))
 
+def create_ip_range_location(config, params):
+    name = re.sub('\W+',' ',params.get('name'))
+    is_trusted = params.get('is_trusted',False)
+    graph_api_endpoint = '{0}/{1}'.format(RESOURCE, config.get('api_version'))
+    url = graph_api_endpoint + '/identity/conditionalAccess/namedLocations'
+    payload = {
+        "@odata.type": "#microsoft.graph.ipNamedLocation",
+        "displayName": name,
+        "isTrusted": is_trusted,
+        "ipRanges": [
+            {
+                "@odata.type": "#microsoft.graph.iPv6CidrRange",
+                "cidrAddress": "100::ffff:ffff:ffff:ffff/128"
+            }
+        ]
+    }
+
+    microsoft_graph = SetupSession(config)
+    response = microsoft_graph.session.post(url=url, json=payload)
+    microsoft_graph.session.close()
+    if response.ok:
+        return response.json()
+    else:
+        raise ConnectorError(
+            'Fail To request API {0} response is :{1} with reason: {2}'.format(str(url), str(response.content),str(response.reason)))
+    
 
 def _check_health(config):
-    try:
-        microsoft_graph = SetupSession(config)
-        microsoft_graph.session.close()
-        if microsoft_graph.token and get_groups(config, {}):
-            return True
-    except Exception as e:
-        logger.exception('{0}'.format(e))
-        raise ConnectorError('{0}'.format(e))
+    if check(config, config.get('connector_info')):
+        return True
 
 
 operations = {
@@ -528,6 +498,8 @@ operations = {
     'del_message_bulk': del_message_bulk,
     'del_message': del_message,
     'revoke_user_sessions': revoke_user_sessions,
+    'create_ip_range_location': create_ip_range_location,
     'block_new_ips': block_new_ips,
+    'unblock_new_ips': block_new_ips,
     'get_all_named_locations': get_all_named_locations
 }
