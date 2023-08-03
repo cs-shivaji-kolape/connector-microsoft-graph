@@ -17,6 +17,8 @@ class MicrosoftGraph(Connector):
         try:
             config['connector_info'] = {"connector_name": self._info_json.get('name'),
                                         "connector_version": self._info_json.get('version')}
+            config['api_version'] = 'v1.0'
+            params['operation'] = operation
             action = operations.get(operation)
             return action(config, params)
         except Exception as e:
