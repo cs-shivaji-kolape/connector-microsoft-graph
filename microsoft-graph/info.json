@@ -1,7 +1,7 @@
 {
   "name": "microsoft-graph",
   "label": "Microsoft Graph API",
-  "version": "1.1.0",
+  "version": "2.0.0",
   "description": "Connect to Office 365 using Microsoft Graph API",
   "publisher": "Fortinet",
   "cs_approved": true,
@@ -9,111 +9,65 @@
   "category": "Utilities",
   "icon_small_name": "small.png",
   "icon_large_name": "large.png",
-  "help_online": "https://docs.fortinet.com/document/fortisoar/1.1.0/microsoft-graph-api/513/microsoft-graph-api-v1-1-0",
+  "help_online": "",
   "ingestion_supported": false,
   "configuration": {
     "fields": [
       {
-        "title": "Access Token Type",
+        "title": "Server URL",
+        "required": true,
+        "editable": true,
+        "visible": true,
+        "type": "text",
+        "name": "resource",
+        "value": "https://graph.microsoft.com",
+        "description": "The service-based URI to which you will connect and perform the automated operations."
+      },
+      {
+        "title": "Tenant ID",
+        "description": "Specify the ID of the tenant that is assigned to you by the Azure application registration portal.",
+        "tooltip": "Specify the ID of the tenant that is assigned to you by the Azure application registration portal.",
+        "required": true,
+        "editable": true,
+        "visible": true,
+        "type": "text",
+        "name": "tenant"
+      },
+      {
+        "title": "Client ID",
+        "description": "Specify the Unique Application ID of the Azure Active Directory application that is used to create an authentication token required to access the API. For information on getting authentication tokens, see the Getting Authentication Tokens section.",
+        "required": true,
+        "editable": true,
+        "visible": true,
+        "type": "text",
+        "name": "client_id",
+        "tooltip": "Specify the Unique Application ID of the Azure Active Directory application that is used to create an authentication token required to access the API. For information on getting authentication tokens, see the Getting Authentication Tokens section."
+      },
+      {
+        "title": "Client Secret",
+        "description": "Specify the Unique Client Secret of the Azure Active Directory application that is used to create an authentication token required to access the API. For information on how to get the secret key, see https://docs.microsoft.com/en-us/windows/security/threat-protection/microsoft-defender-atp/exposed-apis-create-app-webapp.",
+        "required": true,
+        "editable": true,
+        "visible": true,
+        "type": "password",
+        "name": "client_secret",
+        "tooltip": "Specify the Unique Client Secret of the Azure Active Directory application that is used to create an authentication token required to access the API."
+      },
+      {
+        "title": "Get Access Token",
         "required": true,
         "editable": true,
         "visible": true,
         "type": "select",
         "options": [
-          "On behalf of User - Delegate Permission",
-          "Without a User - Application Permission"
+          "Without a User - Application Permission",
+          "On behalf of User - Delegate Permission"
         ],
         "name": "auth_type",
         "value": "Without a User - Application Permission",
         "description": "Select the method using which you will get authentication tokens used to access the security graph APIs. You can choose between On behalf of User – Delegate Permission or Without a User - Application Permission.",
         "onchange": {
-          "Without a User - Application Permission": [
-            {
-              "title": "Server URL",
-              "required": true,
-              "editable": true,
-              "visible": true,
-              "type": "text",
-              "name": "resource",
-              "value": "https://graph.microsoft.com",
-              "description": "The service-based URI to which you will connect and perform the automated operations."
-            },
-            {
-              "title": "Client ID",
-              "required": true,
-              "editable": true,
-              "visible": true,
-              "type": "text",
-              "name": "client_id",
-              "description": "Unique Application ID of the Azure Active Directory application that is used to create an authentication token required to access the API."
-            },
-            {
-              "title": "Client Secret",
-              "required": true,
-              "editable": true,
-              "visible": true,
-              "type": "password",
-              "name": "client_secret",
-              "description": "Unique Client Secret of the Azure Active Directory application that is used to create an authentication token required to access the API. For information on how to get the secret key, see 'https://docs.microsoft.com/en-us/windows/security/threat-protection/microsoft-defender-atp/exposed-apis-create-app-webapp'."
-            },
-            {
-              "title": "Tenant ID",
-              "required": true,
-              "editable": true,
-              "visible": true,
-              "type": "text",
-              "name": "tenant_id",
-              "description": "ID of the tenant that you have been provided for your Azure Active Directory instance."
-            },
-            {
-              "title": "Verify SSL",
-              "required": false,
-              "editable": true,
-              "visible": true,
-              "type": "checkbox",
-              "name": "verify_ssl",
-              "value": true,
-              "description": "Specifies whether the SSL certificate for the server is to be verified or not. By default, this option is set as True."
-            }
-          ],
           "On behalf of User - Delegate Permission": [
-            {
-              "title": "Server URL",
-              "required": true,
-              "editable": true,
-              "visible": true,
-              "type": "text",
-              "name": "resource",
-              "value": "https://graph.microsoft.com",
-              "description": "The service-based URI to which you will connect and perform the automated operations."
-            },
-            {
-              "title": "Client ID",
-              "required": true,
-              "editable": true,
-              "visible": true,
-              "type": "text",
-              "name": "client_id",
-              "description": "Unique API ID of the Azure Active Directory application that is used to create an authentication token required to access the API."
-            },
-            {
-              "title": "Client Secret",
-              "required": true,
-              "editable": true,
-              "visible": true,
-              "type": "password",
-              "name": "client_secret",
-              "description": "Unique API Secret of the Azure Active Directory application that is used to create an authentication token required to access the API. For information on how to get the secret key, see 'https://docs.microsoft.com/en-us/windows/security/threat-protection/microsoft-defender-atp/exposed-apis-create-app-webapp'."
-            },
-            {
-              "title": "Tenant ID",
-              "required": true,
-              "editable": true,
-              "visible": true,
-              "type": "text",
-              "name": "tenant_id",
-              "description": "ID of the tenant that you have been provided for your Azure Active Directory instance."
-            },
             {
               "title": "Authorization Code",
               "required": true,
@@ -126,27 +80,28 @@
             },
             {
               "title": "Redirect URL",
-              "description": "The redirect_uri of your app, where authentication responses can be sent and received by your app. It must exactly match one of the redirect_uri's you registered in the app registration portal.",
+              "tooltip": "The redirect_uri of your app, where authentication responses can be sent and received by your app. It must exactly match one of the redirect_uri's you registered in the app registration portal.",
               "required": false,
               "editable": true,
               "visible": true,
               "type": "text",
               "name": "redirect_url",
-              "placeholder": "E.g. https://localhost/myapp",
-              "tooltip": "(Only Applicable to On behalf of User – Delegate Permission) The redirect_uri of your app, where authentication responses can be sent and received by your app. The redirect URL that you specify here must exactly match one of the redirect_uri's you have registered in your app registration portal."
-            },
-            {
-              "title": "Verify SSL",
-              "required": false,
-              "editable": true,
-              "visible": true,
-              "type": "checkbox",
-              "name": "verify_ssl",
-              "value": true,
-              "description": "Specifies whether the SSL certificate for the server is to be verified or not. By default, this option is set as True."
+              "placeholder": "e.g. https://localhost/myapp",
+              "description": "(Only Applicable to On behalf of User – Delegate Permission) The redirect_uri of your app, where authentication responses can be sent and received by your app. The redirect URL that you specify here must exactly match one of the redirect_uri's you have registered in your app registration portal."
             }
           ]
         }
+      },
+      {
+        "title": "Verify SSL",
+        "description": "Specifies whether the SSL certificate for the server is to be verified or not. By default, this option is set as True.",
+        "required": false,
+        "editable": true,
+        "visible": true,
+        "type": "checkbox",
+        "name": "verify_ssl",
+        "value": true,
+        "tooltip": "Specifies whether the SSL certificate for the server is to be verified or not."
       }
     ]
   },
@@ -1120,7 +1075,7 @@
           "name": "ipv6_ips",
           "required": false,
           "visible": true,
-          "placeholder": "2001:db8::/43, 2001:db8::/47",
+          "placeholder": "e.g. 2001:db8::/43, 2001:db8::/47",
           "editable": true,
           "description": "Specify IP address ranges in allowable IPv6 format, defined in IETF RFC5962, to be blocked in the specified named location. You can specify multiple IPv6 ranges as comma-separated values. e.g. 2001:db8::/43, 2001:db8::/47",
           "tooltip": "Specify IP address ranges in allowable IPv6 format, defined in IETF RFC5962, to be blocked in the specified named location. You can specify multiple IPv6 ranges as comma-separated values. e.g. 2001:db8::/43, 2001:db8::/47"
@@ -1157,8 +1112,8 @@
           "required": true,
           "visible": true,
           "editable": true,
-          "description": "Specify the unique Named Location ID from where you want to remove (unblock) the IP address.",
-          "tooltip": "Specify the unique Named Location ID from where you want to remove (unblock) the IP address."
+          "description": "Specify the unique Named Location ID for which you want unblock the IP addresses.",
+          "tooltip": "Specify the unique Named Location ID for which you want unblock the IP addresses."
         },
         {
           "title": "IPv4 Ranges",
@@ -1177,7 +1132,7 @@
           "name": "ipv6_ips",
           "required": false,
           "visible": true,
-          "placeholder": "2001:db8::/43, 2001:db8::/47",
+          "placeholder": "e.g. 2001:db8::/43, 2001:db8::/47",
           "editable": true,
           "description": "Specify IP address ranges in allowable IPv6 format, defined in IETF RFC5962, to be unblocked in the specified named location. You can specify multiple IPv6 ranges as comma-separated values. e.g. 2001:db8::/43, 2001:db8::/47",
           "tooltip": "Specify IP address ranges in allowable IPv6 format, defined in IETF RFC5962, to be unblocked in the specified named location. You can specify multiple IPv6 ranges as comma-separated values. e.g. 2001:db8::/43, 2001:db8::/47"
@@ -1200,7 +1155,7 @@
         "createdDateTime": "",
         "isTrusted": "",
         "ipRanges": []
-    },
+      },
       "parameters": [
         {
           "title": "Display Name",
@@ -1222,10 +1177,32 @@
           "editable": true,
           "description": "Define whether the IP Range is trusted.",
           "tooltip": "Define whether the IP Range is trusted."
+        },
+        {
+          "title": "IPv4 Ranges",
+          "type": "text",
+          "name": "ipv4_ips",
+          "required": false,
+          "visible": true,
+          "editable": true,
+          "placeholder": "e.g. 10.10.10.10/14, 10.10.10.10/13, 10.10.10.10/09",
+          "description": "Specify IP address ranges in IPv4 CIDR format (1.2.3.4/32) to be added in the specified named location. You can specify multiple IPv4 ranges as comma-separated values. e.g. 10.10.10.10/14, 10.10.10.10/13, 10.10.10.10/09",
+          "tooltip": "Specify IP address ranges in IPv4 CIDR format (1.2.3.4/32) to be added in the specified named location. You can specify multiple IPv4 ranges as comma-separated values. e.g. 10.10.10.10/14, 10.10.10.10/13, 10.10.10.10/09"
+        },
+        {
+          "title": "IPv6 Ranges",
+          "type": "text",
+          "name": "ipv6_ips",
+          "required": false,
+          "visible": true,
+          "placeholder": "e.g. 2001:db8::/43, 2001:db8::/47",
+          "editable": true,
+          "description": "Specify IP address ranges in allowable IPv6 format, defined in IETF RFC5962, to be added in the specified named location. You can specify multiple IPv6 ranges as comma-separated values. e.g. 2001:db8::/43, 2001:db8::/47",
+          "tooltip": "Specify IP address ranges in allowable IPv6 format, defined in IETF RFC5962, to be added in the specified named location. You can specify multiple IPv6 ranges as comma-separated values. e.g. 2001:db8::/43, 2001:db8::/47"
         }
       ],
       "enabled": true
-    }    
+    }
   ]
 }
 

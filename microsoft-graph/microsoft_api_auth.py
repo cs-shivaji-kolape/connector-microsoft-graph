@@ -9,22 +9,9 @@ from time import time, ctime
 from datetime import datetime
 from connectors.core.connector import get_logger, ConnectorError
 from connectors.core.utils import update_connnector_config
-from .utils import logger
+from .constants import *
 
-REFRESH_TOKEN_FLAG = False
-CONFIG_SUPPORTS_TOKEN = True
-
-# authorization types
-AUTH_BEHALF_OF_USER = "On behalf of User - Delegate Permission"
-AUTH_USING_APP = "Without a User - Application Permission"
-
-# redirect url
-DEFAULT_REDIRECT_URL = 'https://localhost/myapp'
-
-# grant types
-CLIENT_CREDENTIALS = 'client_credentials'
-AUTHORIZATION_CODE = 'authorization_code'
-REFRESH_TOKEN = 'refresh_token'
+logger = get_logger('microsoft_graph')
 
 
 class MicrosoftAuth:
@@ -41,7 +28,7 @@ class MicrosoftAuth:
             self.host = "{0}".format(self.host)
         else:
             self.host = "https://{0}".format(self.host)
-        tenant_id = config.get('tenant_id')
+        tenant_id = config.get('tenant')
         self.auth_url = 'https://login.microsoftonline.com/{0}'.format(tenant_id)
         self.auth_type = config.get("auth_type")
         self.token_url = "https://login.microsoftonline.com/{0}/oauth2/v2.0/token".format(tenant_id)

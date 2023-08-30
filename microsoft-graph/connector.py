@@ -5,7 +5,7 @@
   Copyright end """
 
 from connectors.core.connector import Connector, get_logger, ConnectorError
-from .operations import operations, _check_health
+from .operations import operations, _check_health, API_VERSION
 
 
 logger = get_logger('microsoft_graph')
@@ -17,8 +17,7 @@ class MicrosoftGraph(Connector):
         try:
             config['connector_info'] = {"connector_name": self._info_json.get('name'),
                                         "connector_version": self._info_json.get('version')}
-            config['api_version'] = 'v1.0'
-            params['operation'] = operation
+            config['api_version'] = API_VERSION
             action = operations.get(operation)
             return action(config, params)
         except Exception as e:

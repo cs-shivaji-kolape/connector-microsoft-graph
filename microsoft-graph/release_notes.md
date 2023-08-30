@@ -1,4 +1,5 @@
-#### What's Improved 1.2.0
-- Now supports Delegate and application access token type
+#### What's Improved
+- Added support for the Delegate access token type. 
+- Removed configuration parameter `API Version`.
 - Added `Unblock IP`action
 - Added `Create IP Range Location`action
