@@ -398,7 +398,7 @@
         {
           "@type": "Workflow",
           "triggerLimit": null,
-          "name": "Unblock New IP Ranges",
+          "name": "Unblock IP Ranges",
           "aliasName": null,
           "tag": "#Microsoft Graph API",
           "description": "Unlocks  IPv4 and IPv6 address ranges in specified NamedLocation in Azure.",
@@ -442,7 +442,7 @@
             },
             {
               "@type": "WorkflowStep",
-              "name": "Unblock New IP Ranges",
+              "name": "Unblock IP Ranges",
               "description": null,
               "arguments": {
                 "name": "Microsoft Graph API",
@@ -455,7 +455,7 @@
                 "version": "2.0.0",
                 "connector": "microsoft-graph",
                 "operation": "unblock_new_ips",
-                "operationTitle": "Unblock New IP Ranges",
+                "operationTitle": "Unblock IP Ranges",
                 "pickFromTenant": false,
                 "step_variables": []
               },
@@ -965,7 +965,7 @@
         {
           "@type": "Workflow",
           "triggerLimit": null,
-          "name": "Create New IP Ranges",
+          "name": "Create IP Named Location",
           "aliasName": null,
           "tag": "#Microsoft Graph API",
           "description": "Creates new IP Range named location in Azure",
@@ -982,7 +982,7 @@
           "steps": [
             {
               "@type": "WorkflowStep",
-              "name": "Create IP Range Location",
+              "name": "Create IP Named Location",
               "description": null,
               "arguments": {
                 "name": "Microsoft Graph API",
@@ -994,7 +994,7 @@
                 "version": "2.0.0",
                 "connector": "microsoft-graph",
                 "operation": "create_ip_range_location",
-                "operationTitle": "Create IP Range Location",
+                "operationTitle": "Create IP Named Location",
                 "pickFromTenant": false,
                 "step_variables": []
               },

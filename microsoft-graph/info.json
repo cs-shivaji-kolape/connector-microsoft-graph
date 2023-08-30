@@ -1084,7 +1084,7 @@
       "enabled": true
     },
     {
-      "title": "Unblock New IP Ranges",
+      "title": "Unblock IP Ranges",
       "description": "Unblocks IPv4 and IPv6 address ranges in specified NamedLocation in Azure.",
       "operation": "unblock_new_ips",
       "annotation": "unblock_new_ips",
@@ -1141,8 +1141,8 @@
       "enabled": true
     },
     {
-      "title": "Create IP Range Location",
-      "description": "Create a new IP range named location.",
+      "title": "Create IP Named Location",
+      "description": "Creates a new IP named location in Azure based on specified input parameter.",
       "operation": "create_ip_range_location",
       "annotation": "create_ip_range_location",
       "category": "investigation",
