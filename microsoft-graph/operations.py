@@ -4,28 +4,26 @@
   FORTINET CONFIDENTIAL & FORTINET PROPRIETARY SOURCE CODE
   Copyright end """
 
-from connectors.core.connector import get_logger, ConnectorError
 from .utils import _list
 from queue import Queue
 from threading import Thread
 import threading
 import requests
 import re
-import logging
-from time import time
-from .constants import *
 from .microsoft_api_auth import *
+import logging
 
 
 logger = get_logger('microsoft_graph')
-#logger.setLevel(logging.DEBUG) # Uncomment to enable local debug
+# logger.setLevel(logging.DEBUG) # Uncomment to enable local debug
+
 
 class SetupSession(object):
     def __init__(self, config):
         self.connector_info = config.get('connector_info')
-        ms = MicrosoftAuth(config)
-        self.verify_ssl = ms.verify_ssl
-        self.token = ms.validate_token(config, self.connector_info)
+        self.ms = MicrosoftAuth(config)
+        self.verify_ssl = self.ms.verify_ssl
+        self.token = self.ms.validate_token(config, self.connector_info)
         self.__setupSession()
 
     def __setupSession(self):
@@ -305,7 +303,7 @@ def search_message(config, params):
         param['$top'] = params.get('size')
     if params.get("skip", ''):
         param['$skip'] = params.get('skip')
-    for user in _list(params.get('user_list')):
+    for user in _list(params.get('user_list', '')):
         url = graph_api_endpoint + '/users/{0}/messages'.format(user)
         queue_payload = {
             "operation": "Get",
@@ -326,7 +324,7 @@ def del_message_bulk(config, params):
     thread_create = ThreadCreate(config)
     graph_api_endpoint = '{0}/{1}'.format(RESOURCE, config.get('api_version'))
     param = None
-    for user in _list(params.get('user_list')):
+    for user in _list(params.get('user_list', '')):
         url = graph_api_endpoint + '/users/{0}/messages/{1}'.format(user['user_id'], user['message_id'])
         queue_payload = {
             "operation": "Delete",
@@ -372,56 +370,69 @@ def revoke_user_sessions(config, params):
                                                                                str(response.reason)))
 
 
-def block_new_ips(config, params):
-    operation = params.get('operation')
+def block_or_unblock_new_ips(config, params, operation='block_new_ips'):
     microsoft_graph = SetupSession(config)
-    graph_api_endpoint = '{0}/{1}'.format(RESOURCE, config.get('api_version'))
-    named_location_uuid = params.get('namedLocationUuid')
-    url = graph_api_endpoint + '/identity/conditionalAccess/namedLocations/' + named_location_uuid
-    response = microsoft_graph.session.get(url=url)
-    if not response.ok:
-        microsoft_graph.session.close()
+    try:
+        graph_api_endpoint = '{0}/{1}'.format(microsoft_graph.ms.host, config.get('api_version'))
+        named_location_uuid = params.get('namedLocationUuid')
+        url = graph_api_endpoint + '/identity/conditionalAccess/namedLocations/' + named_location_uuid
+        response = microsoft_graph.session.get(url=url)
+        if not response.ok:
+            if response.status_code == 404:
+                logger.error(response.json().get('error').get('message') if 'error' in response.json() else
+                             'Named location with id {0} does not exist in the directory'.format(named_location_uuid))
+            raise ConnectorError(
+                'Fail To request API {0} response is :{1} with reason: {2}'.format(str(url), str(response.content),
+                                                                                   str(response.reason)))
+        response = response.json()
+        if 'ipRanges' in response:
+            ipranges_graph_content = response['ipRanges']
+        else:
+            raise ConnectorError("Specified named location is not of type IP ranges.")
+        if response['isTrusted']:
+            raise ConnectorError("Specified named location is trusted. Cannot be used to block/unblock IP addresses.")
+        ipv4_ips = _list(params.get('ipv4_ips', ''))
+        ipv6_ips = _list(params.get('ipv6_ips', ''))
+        if not (ipv4_ips or ipv6_ips):
+            raise ConnectorError("At least IPv4 or IPv6 address is required.")
+        if operation == 'block_new_ips':
+            if ipv4_ips:
+                for ip in ipv4_ips:
+                    NewIPAddress = {
+                        "@odata.type": IPv4,
+                        "cidrAddress": ip.strip()
+                    }
+                    ipranges_graph_content.append(NewIPAddress)
+            if ipv6_ips:
+                for ip in ipv6_ips:
+                    NewIPAddress = {
+                        "@odata.type": IPv6,
+                        "cidrAddress": ip.strip()
+                    }
+                    ipranges_graph_content.append(NewIPAddress)
+        else:
+            ips_to_unblock = ipv4_ips + ipv6_ips
+            ipranges_graph_content[:] = [entry for entry in ipranges_graph_content if entry.get('cidrAddress') not in ips_to_unblock]
+        newData = {
+            "@odata.type": "#microsoft.graph.ipNamedLocation",
+            "ipRanges": ipranges_graph_content
+        }
+        response = microsoft_graph.session.patch(url=url, json=newData)
+        if response.ok:
+            return response.json()
         raise ConnectorError(
             'Fail To request API {0} response is :{1} with reason: {2}'.format(str(url), str(response.content),
                                                                                str(response.reason)))
-    response = response.json()
-    ipranges_graph_content = response['ipRanges']
-    ipv4_ips = params.get('ipv4_ips')
-    ipv6_ips = params.get('ipv6_ips')
-    if operation == 'block_new_ips':
-        if ipv4_ips:
-            ipv4_ips = ipv4_ips.split(',')
-            for ip in ipv4_ips:
-                NewIPAddress = {
-                    "@odata.type": IPv4,
-                    "cidrAddress": ip.strip()
-                }
-                ipranges_graph_content.append(NewIPAddress)
-        if ipv6_ips:
-            ipv6_ips = ipv6_ips.split(',')
-            for ip in ipv6_ips:
-                NewIPAddress = {
-                    "@odata.type": IPv6,
-                    "cidrAddress": ip.strip()
-                }
-                ipranges_graph_content.append(NewIPAddress)
-    elif operation == 'unblock_new_ips':
-        ips_to_block = params.get('ipv4_ips').split(',') + params.get('ipv6_ips').split(',')
-        ipranges_graph_content[:] = [entry for entry in ipranges_graph_content if entry.get('cidrAddress') not in ips_to_block]
-        if ipranges_graph_content == 0:
-            raise ConnectorError("No IP Addresses to unblock")
-    newData = {
-        "@odata.type": "#microsoft.graph.ipNamedLocation",
-        "isTrusted": False,
-        "ipRanges": ipranges_graph_content
-    }
-    response = microsoft_graph.session.patch(url=url, json=newData)
-    microsoft_graph.session.close()
-    if response.ok:
-        return response.json()
-    raise ConnectorError(
-        'Fail To request API {0} response is :{1} with reason: {2}'.format(str(url), str(response.content),
-                                                                           str(response.reason)))
+    finally:
+        microsoft_graph.session.close()
+
+
+def block_new_ips(config, params):
+    return block_or_unblock_new_ips(config, params)
+
+
+def unblock_new_ips(config, params):
+    return block_or_unblock_new_ips(config, params, 'unblock_new_ips')
 
 
 def get_all_named_locations(config, params):
@@ -454,23 +465,35 @@ def get_all_named_locations(config, params):
             'Fail To request API {0} response is :{1} with reason: {2}'.format(str(url), str(response.content),
                                                                                str(response.reason)))
 
+
 def create_ip_range_location(config, params):
-    name = re.sub('\W+',' ',params.get('name'))
-    is_trusted = params.get('is_trusted',False)
+    name = re.sub('\W+', ' ', params.get('name'))
+    is_trusted = params.get('is_trusted', False)
     graph_api_endpoint = '{0}/{1}'.format(RESOURCE, config.get('api_version'))
     url = graph_api_endpoint + '/identity/conditionalAccess/namedLocations'
     payload = {
         "@odata.type": "#microsoft.graph.ipNamedLocation",
         "displayName": name,
-        "isTrusted": is_trusted,
-        "ipRanges": [
-            {
-                "@odata.type": "#microsoft.graph.iPv6CidrRange",
-                "cidrAddress": "100::ffff:ffff:ffff:ffff/128"
-            }
-        ]
+        "isTrusted": is_trusted
     }
-
+    ipranges_graph_content = []
+    ipv4_ips = _list(params.get('ipv4_ips', ''))
+    ipv6_ips = _list(params.get('ipv6_ips', ''))
+    if ipv4_ips:
+        for ip in ipv4_ips:
+            NewIPAddress = {
+                "@odata.type": IPv4,
+                "cidrAddress": ip.strip()
+            }
+            ipranges_graph_content.append(NewIPAddress)
+    if ipv6_ips:
+        for ip in ipv6_ips:
+            NewIPAddress = {
+                "@odata.type": IPv6,
+                "cidrAddress": ip.strip()
+            }
+            ipranges_graph_content.append(NewIPAddress)
+    payload['ipRanges'] = ipranges_graph_content
     microsoft_graph = SetupSession(config)
     response = microsoft_graph.session.post(url=url, json=payload)
     microsoft_graph.session.close()
@@ -478,8 +501,9 @@ def create_ip_range_location(config, params):
         return response.json()
     else:
         raise ConnectorError(
-            'Fail To request API {0} response is :{1} with reason: {2}'.format(str(url), str(response.content),str(response.reason)))
-    
+            'Fail To request API {0} response is :{1} with reason: {2}'.format(str(url), str(response.content),
+                                                                               str(response.reason)))
+
 
 def _check_health(config):
     if check(config, config.get('connector_info')):
@@ -500,6 +524,6 @@ operations = {
     'revoke_user_sessions': revoke_user_sessions,
     'create_ip_range_location': create_ip_range_location,
     'block_new_ips': block_new_ips,
-    'unblock_new_ips': block_new_ips,
+    'unblock_new_ips': unblock_new_ips,
     'get_all_named_locations': get_all_named_locations
 }

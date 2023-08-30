@@ -11,7 +11,7 @@ logger = get_logger('microsoft_graph')
 
 def _list(user_list):
     if isinstance(user_list, str):
-        user_list = user_list.replace(" ", "").split(",")
+        user_list = user_list.replace(" ", "").split(",") if user_list else []
     elif isinstance(user_list, tuple):
         user_list = list(user_list)
     elif isinstance(user_list, list):
