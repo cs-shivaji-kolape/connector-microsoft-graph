@@ -9,7 +9,6 @@ from queue import Queue
 from threading import Thread
 import threading
 import requests
-import re
 from .microsoft_api_auth import *
 import logging
 
@@ -467,7 +466,7 @@ def get_all_named_locations(config, params):
 
 
 def create_ip_range_location(config, params):
-    name = re.sub('\W+', ' ', params.get('name'))
+    name = params.get('name')
     is_trusted = params.get('is_trusted', False)
     graph_api_endpoint = '{0}/{1}'.format(RESOURCE, config.get('api_version'))
     url = graph_api_endpoint + '/identity/conditionalAccess/namedLocations'
