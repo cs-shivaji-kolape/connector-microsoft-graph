@@ -1161,11 +1161,11 @@
           "title": "Display Name",
           "type": "text",
           "name": "name",
-          "required": false,
+          "required": true,
           "visible": true,
           "editable": true,
-          "description": "Specify the display name of the named location to retrieve from Azure. ",
-          "tooltip": "Specify the display name of the named location to retrieve from Azure."
+          "description": "Specify the display name of the named location to create in Azure.",
+          "tooltip": "Specify the display name of the named location to create in Azure."
         },
         {
           "title": "Is Trusted",
