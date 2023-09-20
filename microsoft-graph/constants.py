@@ -43,7 +43,7 @@ AUTH_BEHALF_OF_USER = "On behalf of User - Delegate Permission"
 REFRESH_TOKEN_FLAG = False
 CONFIG_SUPPORTS_TOKEN = True
 DEFAULT_REDIRECT_URL = 'https://localhost/myapp'
-
+AUTH_URL = 'https://login.microsoftonline.com'
 # grant types
 CLIENT_CREDENTIALS = 'client_credentials'
 AUTHORIZATION_CODE = 'authorization_code'

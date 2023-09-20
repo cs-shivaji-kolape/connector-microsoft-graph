@@ -20,18 +20,18 @@ class MicrosoftAuth:
         self.client_id = config.get("client_id")
         self.client_secret = config.get("client_secret")
         self.verify_ssl = config.get('verify_ssl')
-        self.scope = "https://graph.microsoft.com/.default offline_access"
-        self.host = config.get("resource")
+        self.host = config.get("resource").strip("/")
         if self.host[:7] == "http://":
             self.host = self.host.replace('http://', 'https://')
         elif self.host[:8] == "https://":
             self.host = "{0}".format(self.host)
         else:
             self.host = "https://{0}".format(self.host)
+        self.scope = "{0}/.default offline_access".format(self.host)
         tenant_id = config.get('tenant')
-        self.auth_url = 'https://login.microsoftonline.com/{0}'.format(tenant_id)
+        self.auth_url = '{0}/{1}'.format(AUTH_URL, tenant_id)
         self.auth_type = config.get("auth_type")
-        self.token_url = "https://login.microsoftonline.com/{0}/oauth2/v2.0/token".format(tenant_id)
+        self.token_url = "{0}/{1}/oauth2/v2.0/token".format(AUTH_URL, tenant_id)
         if self.auth_type == AUTH_BEHALF_OF_USER:
             self.refresh_token = ""
             self.code = config.get("code")
