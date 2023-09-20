@@ -176,13 +176,13 @@ def check_payload(payload):
 
 
 def get_risky_users_list(config, params):
-    graph_api_endpoint = '{0}/{1}'.format(RESOURCE, config.get('api_version'))
+    microsoft_graph = SetupSession(config)
+    graph_api_endpoint = '{0}/{1}'.format(microsoft_graph.ms.host, config.get('api_version'))
     risk_id = params.get('risk_id')
     if risk_id:
         url = graph_api_endpoint + '/identityProtection/riskyUsers/{0}'.format(risk_id)
     else:
         url = graph_api_endpoint + '/identityProtection/riskyUsers'
-    microsoft_graph = SetupSession(config)
     response = microsoft_graph.session.get(url=url)
     microsoft_graph.session.close()
     if response.ok:
@@ -198,13 +198,13 @@ def get_risky_user_details(config, params):
 
 
 def get_groups(config, params):
-    graph_api_endpoint = '{0}/{1}'.format(RESOURCE, config.get('api_version'))
+    microsoft_graph = SetupSession(config)
+    graph_api_endpoint = '{0}/{1}'.format(microsoft_graph.ms.host, config.get('api_version'))
     group_id = params.get('group_id')
     if group_id:
         url = graph_api_endpoint + '/groups/{0}/members'.format(group_id)
     else:
         url = graph_api_endpoint + '/groups'
-    microsoft_graph = SetupSession(config)
     response = microsoft_graph.session.get(url=url)
     microsoft_graph.session.close()
     if response.ok:
@@ -220,10 +220,10 @@ def get_group_users(config, params):
 
 
 def get_security_alert(config, params):
-    graph_api_endpoint = '{0}/{1}'.format(RESOURCE, config.get('api_version'))
+    microsoft_graph = SetupSession(config)
+    graph_api_endpoint = '{0}/{1}'.format(microsoft_graph.ms.host, config.get('api_version'))
     url = graph_api_endpoint + '/security/alerts/{0}'.format(params.get('alert_id'))
     logger.info("THIS IS THE URL: " + url)
-    microsoft_graph = SetupSession(config)
     response = microsoft_graph.session.get(url=url)
     microsoft_graph.session.close()
     if response.ok:
@@ -235,9 +235,9 @@ def get_security_alert(config, params):
 
 
 def get_all_security_alerts(config, params):
-    graph_api_endpoint = '{0}/{1}'.format(RESOURCE, config.get('api_version'))
-    url = graph_api_endpoint + '/security/alerts'
     microsoft_graph = SetupSession(config)
+    graph_api_endpoint = '{0}/{1}'.format(microsoft_graph.ms.host, config.get('api_version'))
+    url = graph_api_endpoint + '/security/alerts'
     all_filters = []
     for p_name, parameter in params.items():
         if not parameter:
@@ -263,7 +263,8 @@ def get_all_security_alerts(config, params):
 
 
 def update_security_alert(config, params):
-    graph_api_endpoint = '{0}/{1}'.format(RESOURCE, config.get('api_version'))
+    microsoft_graph = SetupSession(config)
+    graph_api_endpoint = '{0}/{1}'.format(microsoft_graph.ms.host, config.get('api_version'))
     url = graph_api_endpoint + '/security/alerts/{0}'.format(params.get('alert_id'))
     alert_tags = str(params.get('tags', ''))
     if alert_tags:
@@ -281,7 +282,6 @@ def update_security_alert(config, params):
             'providerVersion': params.get('providerVersion')
         }
     }
-    microsoft_graph = SetupSession(config)
     payload = check_payload(payload)
     response = microsoft_graph.session.patch(url=url, json=payload)
     microsoft_graph.session.close()
@@ -341,9 +341,9 @@ def del_message_bulk(config, params):
 
 
 def del_message(config, params):
-    graph_api_endpoint = '{0}/{1}'.format(RESOURCE, config.get('api_version'))
-    url = graph_api_endpoint + '/users/{0}/messages/{1}'.format(params.get('user_id'), params.get('message_id'))
     microsoft_graph = SetupSession(config)
+    graph_api_endpoint = '{0}/{1}'.format(microsoft_graph.ms.host, config.get('api_version'))
+    url = graph_api_endpoint + '/users/{0}/messages/{1}'.format(params.get('user_id'), params.get('message_id'))
     microsoft_graph.session.headers.pop('Prefer', '')
     response = microsoft_graph.session.delete(url=url)
     microsoft_graph.session.close()
@@ -356,9 +356,9 @@ def del_message(config, params):
 
 
 def revoke_user_sessions(config, params):
-    graph_api_endpoint = '{0}/{1}'.format(RESOURCE, config.get('api_version'))
-    url = graph_api_endpoint + '/users/{0}/revokeSignInSessions'.format(params.get('user'))
     microsoft_graph = SetupSession(config)
+    graph_api_endpoint = '{0}/{1}'.format(microsoft_graph.ms.host, config.get('api_version'))
+    url = graph_api_endpoint + '/users/{0}/revokeSignInSessions'.format(params.get('user'))
     response = microsoft_graph.session.post(url=url)
     microsoft_graph.session.close()
     if response.ok:
@@ -435,9 +435,9 @@ def unblock_new_ips(config, params):
 
 
 def get_all_named_locations(config, params):
-    graph_api_endpoint = '{0}/{1}'.format(RESOURCE, config.get('api_version'))
-    url = graph_api_endpoint + '/identity/conditionalAccess/namedLocations'
     microsoft_graph = SetupSession(config)
+    graph_api_endpoint = '{0}/{1}'.format(microsoft_graph.ms.host, config.get('api_version'))
+    url = graph_api_endpoint + '/identity/conditionalAccess/namedLocations'
     order_by = FIELDS.get(params.get('order_by'))
     if params.get('order') == 'Descending':
         order_by += ' desc'
@@ -466,9 +466,10 @@ def get_all_named_locations(config, params):
 
 
 def create_ip_range_location(config, params):
+    microsoft_graph = SetupSession(config)
     name = params.get('name')
     is_trusted = params.get('is_trusted', False)
-    graph_api_endpoint = '{0}/{1}'.format(RESOURCE, config.get('api_version'))
+    graph_api_endpoint = '{0}/{1}'.format(microsoft_graph.ms.host, config.get('api_version'))
     url = graph_api_endpoint + '/identity/conditionalAccess/namedLocations'
     payload = {
         "@odata.type": "#microsoft.graph.ipNamedLocation",
@@ -493,7 +494,6 @@ def create_ip_range_location(config, params):
             }
             ipranges_graph_content.append(NewIPAddress)
     payload['ipRanges'] = ipranges_graph_content
-    microsoft_graph = SetupSession(config)
     response = microsoft_graph.session.post(url=url, json=payload)
     microsoft_graph.session.close()
     if response.ok:
