@@ -9,7 +9,7 @@
   "category": "Utilities",
   "icon_small_name": "small.png",
   "icon_large_name": "large.png",
-  "help_online": "",
+  "help_online": "https://docs.fortinet.com/document/fortisoar/2.0.0/microsoft-graph-api/693/microsoft-graph-api-v2-0-0",
   "ingestion_supported": false,
   "configuration": {
     "fields": [
@@ -21,12 +21,12 @@
         "type": "text",
         "name": "resource",
         "value": "https://graph.microsoft.com",
-        "description": "The service-based URI to which you will connect and perform the automated operations."
+        "description": "Specify the service-based URI to connect and perform automated operations."
       },
       {
         "title": "Tenant ID",
-        "description": "Specify the ID of the tenant that is assigned to you by the Azure application registration portal.",
-        "tooltip": "Specify the ID of the tenant that is assigned to you by the Azure application registration portal.",
+        "description": "Specify the ID of the tenant assigned to you by the Azure application registration portal.",
+        "tooltip": "Specify the ID of the tenant assigned to you by the Azure application registration portal.",
         "required": true,
         "editable": true,
         "visible": true,
@@ -35,13 +35,13 @@
       },
       {
         "title": "Client ID",
-        "description": "Specify the Unique Application ID of the Azure Active Directory application that is used to create an authentication token required to access the API. For information on getting authentication tokens, see the Getting Authentication Tokens section.",
+        "description": "Specify the Unique Application ID of the Azure Active Directory application to create an authentication token required to access the API. For information on getting authentication tokens, see the Getting Authentication Tokens section.",
         "required": true,
         "editable": true,
         "visible": true,
         "type": "text",
         "name": "client_id",
-        "tooltip": "Specify the Unique Application ID of the Azure Active Directory application that is used to create an authentication token required to access the API. For information on getting authentication tokens, see the Getting Authentication Tokens section."
+        "tooltip": "Specify the Unique Application ID of the Azure Active Directory application to create an authentication token required to access the API. For information on getting authentication tokens, see the Getting Authentication Tokens section."
       },
       {
         "title": "Client Secret",
@@ -65,7 +65,8 @@
         ],
         "name": "auth_type",
         "value": "Without a User - Application Permission",
-        "description": "Select the method using which you will get authentication tokens used to access the security graph APIs. You can choose between On behalf of User – Delegate Permission or Without a User - Application Permission.",
+        "description": "Select the method using which you will get authentication tokens used to access the security graph APIs. You can choose between On behalf of User - Delegate Permission or Without a User - Application Permission.",
+        "tooltip": "Select the method using which you will get authentication tokens used to access the security graph APIs.",
         "onchange": {
           "On behalf of User - Delegate Permission": [
             {
@@ -75,8 +76,8 @@
               "visible": true,
               "type": "password",
               "name": "code",
-              "tooltip": "Authorization code that you acquired in the authorization step.",
-              "description": "(Only Applicable to On behalf of User – Delegate Permission) The authorization code that you acquired during the authorization step. For more information, see the Getting Access Tokens using the Delegate Permissions method section."
+              "tooltip": "Specify the authorization code that you acquired during the authorization step",
+              "description": "Specify the authorization code that you acquired during the authorization step. For more information, see the Getting Access Tokens using the Delegate Permissions method section."
             },
             {
               "title": "Redirect URL",
@@ -87,21 +88,21 @@
               "type": "text",
               "name": "redirect_url",
               "placeholder": "e.g. https://localhost/myapp",
-              "description": "(Only Applicable to On behalf of User – Delegate Permission) The redirect_uri of your app, where authentication responses can be sent and received by your app. The redirect URL that you specify here must exactly match one of the redirect_uri's you have registered in your app registration portal."
+              "description": "The redirect_uri of your app, where authentication responses can be sent and received by your app. The redirect URL that you specify here must exactly match one of the redirect_uri's you have registered in your app registration portal."
             }
           ]
         }
       },
       {
         "title": "Verify SSL",
-        "description": "Specifies whether the SSL certificate for the server is to be verified or not. By default, this option is set as True.",
+        "description": "Specifies whether the SSL certificate for the server is to be verified. By default, this option is set to True.",
         "required": false,
         "editable": true,
         "visible": true,
         "type": "checkbox",
         "name": "verify_ssl",
         "value": true,
-        "tooltip": "Specifies whether the SSL certificate for the server is to be verified or not."
+        "tooltip": "Specifies whether the SSL certificate for the server is to be verified."
       }
     ]
   },
@@ -165,14 +166,14 @@
     },
     {
       "title": "Get All Security Alerts",
-      "description": "Retrieves a list of all alerts or specific alerts from Microsoft Graph API based on the input parameters you have specified.",
+      "description": "Retrieves a list of alerts from Microsoft Graph API based on the input parameters you have specified.",
       "operation": "get_all_security_alerts",
       "category": "investigation",
       "annotation": "get_all_security_alerts",
       "parameters": [
         {
           "title": "Vendor",
-          "description": "Specify the name of the vendor for the product that provided the alert you want to retrieve using Microsoft Graph API. For example, Microsoft",
+          "description": "Specify the name of the product vendor that provided the alert you want to retrieve using Microsoft Graph API. For example, Microsoft",
           "required": false,
           "editable": true,
           "visible": true,
@@ -183,7 +184,7 @@
         },
         {
           "title": "Provider",
-          "description": "Specify the security product that provided the alert you want to retrieve using Microsoft Graph API. For example, Cloud Application Security.",
+          "description": "Specify the security product that provided the alert you want to retrieve using Microsoft Graph API. For example, Cloud Application Security",
           "required": false,
           "editable": true,
           "visible": true,
@@ -194,7 +195,7 @@
         },
         {
           "title": "Severity",
-          "description": "Select the alert severity, which is set by the vendor or provider based on which you want to retrieve alerts using Microsoft Graph API. You can choose from the following options: Unknown, Low, Medium, High or Informational.",
+          "description": "Select the alert severity, set by the vendor or provider, to retrieve alerts using Microsoft Graph API. You can choose from the following options: Unknown Low Medium High Informational",
           "tooltip": "Select the alert severity, which is set by the vendor or provider based on which you want to retrieve alerts using Microsoft Graph API",
           "required": false,
           "editable": true,
@@ -211,7 +212,7 @@
         },
         {
           "title": "Search From",
-          "description": "Select the DateTime at which the event(s) that served as the trigger(s) to generate the alert you want to retrieve using Microsoft Graph API.",
+          "description": "Select the date and time of alert triggering event(s) to retrieve using Microsoft Graph API.",
           "tooltip": "Select the DateTime at which the event(s) that served as the trigger(s) to generate the alert you want to retrieve using Microsoft Graph API.",
           "required": false,
           "editable": true,
@@ -277,14 +278,14 @@
     },
     {
       "title": "Get Security Alert",
-      "description": "Retrieves a specific alert from Microsoft Graph API based on the alert ID you have specified.",
+      "description": "Retrieves details of a specific alert from Microsoft Graph API based on the alert ID you have specified.",
       "operation": "get_security_alert",
       "category": "investigation",
       "annotation": "get_security_alert",
       "parameters": [
         {
           "title": "Alert ID",
-          "description": "Specify the unique Alert ID using which you want to retrieve the specific alert from Microsoft Graph API. The alert ID is generated by the provider when an alert is created in Azure.",
+          "description": "Specify the unique Alert ID to retrieve that alert from Microsoft Graph API. The alert ID is generated by the provider when an alert is created in Azure.",
           "tooltip": "Specify the unique Alert ID using which you want to retrieve the specific alert from Microsoft Graph API. The alert ID is generated by the provider when an alert is created in Azure.",
           "required": true,
           "editable": true,
@@ -365,7 +366,7 @@
       "parameters": [
         {
           "title": "Alert ID",
-          "description": "Specify the unique Alert ID using which you want to update the specific alert from Microsoft Graph API. The alert ID is generated by the provider when an alert is created in Azure.",
+          "description": "Specify the unique alert ID to update that alert through Microsoft Graph API. The alert ID is generated by the provider when an alert is created in Azure.",
           "tooltip": "Specify the unique Alert ID using which you want to update the specific alert from Microsoft Graph API.",
           "required": true,
           "editable": true,
@@ -375,7 +376,7 @@
         },
         {
           "title": "Provider",
-          "description": "Specify the provider of product or service in Azure that you want to update in the specific alert in Azure. For example, WindowsDefenderATP.",
+          "description": "Specify the provider of product or service in Azure to update in the specific alert in Azure. For example, WindowsDefenderATP.",
           "required": true,
           "editable": true,
           "visible": true,
@@ -386,7 +387,7 @@
         },
         {
           "title": "Vendor",
-          "description": "Specify the name of the vendor of the alert that you want to update in the specific alert in Azure. For example, Microsoft.",
+          "description": "Specify the name of the vendor to update in the specific alert in Azure. For example, Microsoft.",
           "required": true,
           "editable": true,
           "visible": true,
@@ -423,7 +424,7 @@
         },
         {
           "title": "Comments",
-          "description": "(Optional) Select the analyst comments that you want to update in the specific alert in Azure. You can choose between Closed in MCAS or Closed in IPC..",
+          "description": "(Optional) Select the analyst comments that you want to update in the specific alert in Azure. You can choose between Closed in MCAS or Closed in IPS.",
           "required": false,
           "editable": true,
           "visible": true,
@@ -473,7 +474,7 @@
         },
         {
           "title": "Subprovider",
-          "description": "(Optional) Specify the name of the sub-provider under the aggregating provider in Azure for the alert t that you want to update in Azure. For example, WindowsDefenderATP.SmartScreen.",
+          "description": "(Optional) Specify the name of the sub-provider under the aggregating provider in Azure for the alert t that you want to update in Azure. For example, WindowsDefenderATP.SmartScreen",
           "required": false,
           "editable": true,
           "visible": true,
@@ -551,7 +552,7 @@
       "operation": "get_groups",
       "category": "investigation",
       "annotation": "get_groups",
-      "description": "Retrieves a list of all groups from Microsoft Graph API.",
+      "description": "Retrieves a list of groups from Microsoft Graph API.",
       "parameters": [],
       "output_schema": {
         "@odata.context": "",
@@ -588,7 +589,8 @@
             "securityIdentifier": "",
             "theme": "",
             "visibility": "",
-            "onPremisesProvisioningErrors": []
+            "onPremisesProvisioningErrors": [],
+            "serviceProvisioningErrors": []
           }
         ]
       },
@@ -596,14 +598,14 @@
     },
     {
       "title": "Get Users Within A Group",
-      "description": "Retrieves a list of all users within a specific group from Microsoft Graph API based on the group ID you have specified.",
+      "description": "Retrieves a list of users within a specific group from Microsoft Graph API based on the group ID you have specified.",
       "operation": "get_group_users",
       "annotation": "get_group_users",
       "category": "investigation",
       "parameters": [
         {
           "title": "Group ID",
-          "description": "Specify an ID of the group whose users you want to retrieve from Microsoft Graph. Note: To get the 'Group ID' use the 'Get Groups' operation.",
+          "description": "Specify an ID of the group whose users you want to retrieve from Microsoft Graph. Note: To get the Group ID use the Get Groups operation.",
           "tooltip": "Specify an ID of the group whose users you want to retrieve from Microsoft Graph. Note: To get the 'Group ID' use the 'Get Groups' operation.",
           "required": true,
           "editable": true,
@@ -635,7 +637,7 @@
     },
     {
       "title": "Search Message in Users Mailbox",
-      "description": "Searches for messages based on 'Subject' delivered to the user within the organization using Microsoft Graph API based on the subject and user list you have specified.",
+      "description": "Searches for messages in a user's mailbox within an organization based on the Subject and user list you have specified.",
       "operation": "search_message",
       "annotation": "search_message",
       "category": "investigation",
@@ -792,14 +794,14 @@
     },
     {
       "title": "Delete Message Bulk",
-      "description": "Deletes messages from multiple users' mailboxes in Azure based on the comma-separated list of users you have specified.",
+      "description": "Deletes messages from multiple users mailboxes in Azure based on the comma-separated list of users you have specified.",
       "operation": "del_message_bulk",
       "annotation": "del_message_bulk",
       "category": "investigation",
       "parameters": [
         {
           "title": "User List",
-          "description": "Specify a comma-separated list of users mailboxes, which is a list of JSON objects, i.e., [{'user_id':\", 'message_id':\"}, ...]based on which you want to delete bulk messages in Azure.",
+          "description": "Specify a comma-separated list of users' mailboxes, which is a list of JSON objects, based on which you want to delete bulk messages in Azure. The format of the list is as follows: [ { 'user_id':\"\", 'message_id':\"\" }, { 'user_id':\"\", 'message_id':\"\" } ]",
           "required": true,
           "editable": true,
           "visible": true,
@@ -872,13 +874,16 @@
             "displayName": "",
             "modifiedDateTime": "",
             "createdDateTime": "",
-            "isTrusted": false,
+            "isTrusted": "",
             "ipRanges": [
               {
                 "@odata.type": "",
                 "cidrAddress": ""
               }
-            ]
+            ],
+            "includeUnknownCountriesAndRegions": "",
+            "countryLookupMethod": "",
+            "countriesAndRegions": []
           }
         ]
       },
@@ -916,7 +921,7 @@
           "required": false,
           "visible": true,
           "editable": true,
-          "description": "(Optional) Orders results based on specified field. You can choose from ID, Display Name, Created Date Time or Modified Date Time",
+          "description": "(Optional) Select the sort order criterion to sort the results. Select the sorting order in Sort Order field. You can choose from following options: ID, Display Name, Created Date Time or Modified Date Time",
           "tooltip": "Orders results based on specified field.",
           "options": [
             "ID",
@@ -1010,8 +1015,8 @@
           "visible": true,
           "placeholder": "",
           "editable": true,
-          "description": "(Optional) Specify the number of named locations to retrieve in this request. ",
-          "tooltip": "Specify the number of named locations to retrieve in this request. "
+          "description": "(Optional) Specify the number of named locations to retrieve in this request.",
+          "tooltip": "Specify the number of named locations to retrieve in this request."
         },
         {
           "title": "Offset",
@@ -1067,7 +1072,7 @@
           "editable": true,
           "placeholder": "e.g. 10.10.10.10/14, 10.10.10.10/13, 10.10.10.10/09",
           "description": "Specify IP address ranges in IPv4 CIDR format (1.2.3.4/32) to be blocked in the specified named location. You can specify multiple IPv4 ranges as comma-separated values. e.g. 10.10.10.10/14, 10.10.10.10/13, 10.10.10.10/09",
-          "tooltip": "Specify IP address ranges in IPv4 CIDR format (1.2.3.4/32) to be blocked in the specified named location. You can specify multiple IPv4 ranges as comma-separated values. e.g. 10.10.10.10/14, 10.10.10.10/13, 10.10.10.10/09"
+          "tooltip": "Specify IP address ranges in IPv4 CIDR format (1.2.3.4/32) to be blocked in the specified named location. You can specify multiple IPv4 ranges as comma-separated values."
         },
         {
           "title": "IPv6 Ranges",
@@ -1077,8 +1082,8 @@
           "visible": true,
           "placeholder": "e.g. 2001:db8::/43, 2001:db8::/47",
           "editable": true,
-          "description": "Specify IP address ranges in allowable IPv6 format, defined in IETF RFC5962, to be blocked in the specified named location. You can specify multiple IPv6 ranges as comma-separated values. e.g. 2001:db8::/43, 2001:db8::/47",
-          "tooltip": "Specify IP address ranges in allowable IPv6 format, defined in IETF RFC5962, to be blocked in the specified named location. You can specify multiple IPv6 ranges as comma-separated values. e.g. 2001:db8::/43, 2001:db8::/47"
+          "description": "Specify IP address ranges in IPv6 format, as defined in IETF RFC5962, to be blocked in the specified named location. You can specify multiple IPv6 ranges as comma-separated values. For example: 2001:db8::/43, 2001:db8::/47",
+          "tooltip": "Specify IP address ranges in allowable IPv6 format, defined in IETF RFC5962, to be blocked in the specified named location. You can specify multiple IPv6 ranges as comma-separated values."
         }
       ],
       "enabled": true
@@ -1112,7 +1117,7 @@
           "required": true,
           "visible": true,
           "editable": true,
-          "description": "Specify the unique Named Location ID for which you want unblock the IP addresses.",
+          "description": "Specify the unique named location ID for which you want unblock the IP addresses.",
           "tooltip": "Specify the unique Named Location ID for which you want unblock the IP addresses."
         },
         {
@@ -1123,8 +1128,8 @@
           "visible": true,
           "editable": true,
           "placeholder": "e.g. 10.10.10.10/14, 10.10.10.10/13, 10.10.10.10/09",
-          "description": "Specify IP address ranges in IPv4 CIDR format (1.2.3.4/32) to be unblocked in the specified named location. You can specify multiple IPv4 ranges as comma-separated values. e.g. 10.10.10.10/14, 10.10.10.10/13, 10.10.10.10/09",
-          "tooltip": "Specify IP address ranges in IPv4 CIDR format (1.2.3.4/32) to be unblocked in the specified named location. You can specify multiple IPv4 ranges as comma-separated values. e.g. 10.10.10.10/14, 10.10.10.10/13, 10.10.10.10/09"
+          "description": "Specify IP address ranges in IPv4 CIDR format (1.2.3.4/32) to be unblocked in the specified named location. You can specify multiple IPv4 ranges as comma-separated values. For example: 10.10.10.10/14, 10.10.10.10/13, 10.10.10.10/09",
+          "tooltip": "Specify IP address ranges in IPv4 CIDR format (1.2.3.4/32) to be unblocked in the specified named location. You can specify multiple IPv4 ranges as comma-separated values."
         },
         {
           "title": "IPv6 Ranges",
@@ -1134,8 +1139,8 @@
           "visible": true,
           "placeholder": "e.g. 2001:db8::/43, 2001:db8::/47",
           "editable": true,
-          "description": "Specify IP address ranges in allowable IPv6 format, defined in IETF RFC5962, to be unblocked in the specified named location. You can specify multiple IPv6 ranges as comma-separated values. e.g. 2001:db8::/43, 2001:db8::/47",
-          "tooltip": "Specify IP address ranges in allowable IPv6 format, defined in IETF RFC5962, to be unblocked in the specified named location. You can specify multiple IPv6 ranges as comma-separated values. e.g. 2001:db8::/43, 2001:db8::/47"
+          "description": "Specify IP address ranges in IPv6 format, as defined in IETF RFC5962, to be unblocked in the specified named location. You can specify multiple IPv6 ranges as comma-separated values. For example: 2001:db8::/43, 2001:db8::/47",
+          "tooltip": "Specify IP address ranges in IPv6 format, as defined in IETF RFC5962, to be unblocked in the specified named location. You can specify multiple IPv6 ranges as comma-separated values."
         }
       ],
       "enabled": true
@@ -1175,8 +1180,8 @@
           "required": false,
           "visible": true,
           "editable": true,
-          "description": "Define whether the IP Range is trusted.",
-          "tooltip": "Define whether the IP Range is trusted."
+          "description": "Select if the IP Range is trusted.",
+          "tooltip": "Select if the IP Range is trusted."
         },
         {
           "title": "IPv4 Ranges",
@@ -1186,7 +1191,7 @@
           "visible": true,
           "editable": true,
           "placeholder": "e.g. 10.10.10.10/14, 10.10.10.10/13, 10.10.10.10/09",
-          "description": "Specify IP address ranges in IPv4 CIDR format (1.2.3.4/32) to be added in the specified named location. You can specify multiple IPv4 ranges as comma-separated values. e.g. 10.10.10.10/14, 10.10.10.10/13, 10.10.10.10/09",
+          "description": "Specify IP address ranges in IPv4 CIDR format (1.2.3.4/32) to be added in the specified named location. You can specify multiple IPv4 ranges as comma-separated values. For example: 10.10.10.10/14, 10.10.10.10/13, 10.10.10.10/09",
           "tooltip": "Specify IP address ranges in IPv4 CIDR format (1.2.3.4/32) to be added in the specified named location. You can specify multiple IPv4 ranges as comma-separated values. e.g. 10.10.10.10/14, 10.10.10.10/13, 10.10.10.10/09"
         },
         {
@@ -1197,7 +1202,7 @@
           "visible": true,
           "placeholder": "e.g. 2001:db8::/43, 2001:db8::/47",
           "editable": true,
-          "description": "Specify IP address ranges in allowable IPv6 format, defined in IETF RFC5962, to be added in the specified named location. You can specify multiple IPv6 ranges as comma-separated values. e.g. 2001:db8::/43, 2001:db8::/47",
+          "description": "Specify IP address ranges in IPv6 format, as defined in IETF RFC5962, to be added in the specified named location. You can specify multiple IPv6 ranges as comma-separated values. For example: 2001:db8::/43, 2001:db8::/47",
           "tooltip": "Specify IP address ranges in allowable IPv6 format, defined in IETF RFC5962, to be added in the specified named location. You can specify multiple IPv6 ranges as comma-separated values. e.g. 2001:db8::/43, 2001:db8::/47"
         }
       ],
@@ -1205,4 +1210,3 @@
     }
   ]
 }
-
