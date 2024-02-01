@@ -4,7 +4,7 @@
     {
       "uuid": "585a99d1-de55-42f0-9b80-4c7d63a5463d",
       "@type": "WorkflowCollection",
-      "name": "Sample - Microsoft Graph API - 2.0.0",
+      "name": "Sample - Microsoft Graph API - 2.1.0",
       "description": "Microsoft Graph API is a powerful and unified programming interface provided by Microsoft that allows developers to access a wide range of data and services from Microsoft 365 and Azure Active Directory (Azure AD). It provides a single endpoint and a consistent set of RESTful web APIs, making it easier for developers to integrate and interact with Microsoft's cloud services and applications.",
       "visible": true,
       "image": null,
@@ -68,12 +68,11 @@
                 "name": "Microsoft Graph API",
                 "config": "''",
                 "params": [],
-                "version": "2.0.0",
+                "version": "2.1.0",
                 "connector": "microsoft-graph",
                 "operation": "get_risky_users_list",
                 "operationTitle": "Get Risky Users List",
                 "step_variables": {
-                  "output_data": "{{vars.result}}"
                 }
               },
               "left": "188",
@@ -148,12 +147,11 @@
                 "name": "Microsoft Graph API",
                 "config": "''",
                 "params": [],
-                "version": "2.0.0",
+                "version": "2.1.0",
                 "connector": "microsoft-graph",
                 "operation": "get_risky_user_details",
                 "operationTitle": "Get Risky User Details",
                 "step_variables": {
-                  "output_data": "{{vars.result}}"
                 }
               },
               "left": "188",
@@ -228,12 +226,11 @@
                 "name": "Microsoft Graph API",
                 "config": "''",
                 "params": [],
-                "version": "2.0.0",
+                "version": "2.1.0",
                 "connector": "microsoft-graph",
                 "operation": "get_all_security_alerts",
                 "operationTitle": "Get All Security Alerts",
                 "step_variables": {
-                  "output_data": "{{vars.result}}"
                 }
               },
               "left": "188",
@@ -308,12 +305,11 @@
                 "name": "Microsoft Graph API",
                 "config": "''",
                 "params": [],
-                "version": "2.0.0",
+                "version": "2.1.0",
                 "connector": "microsoft-graph",
                 "operation": "get_security_alert",
                 "operationTitle": "Get Security Alert",
                 "step_variables": {
-                  "output_data": "{{vars.result}}"
                 }
               },
               "left": "188",
@@ -388,12 +384,11 @@
                 "name": "Microsoft Graph API",
                 "config": "''",
                 "params": [],
-                "version": "2.0.0",
+                "version": "2.1.0",
                 "connector": "microsoft-graph",
                 "operation": "update_security_alert",
                 "operationTitle": "Update Security Alert",
                 "step_variables": {
-                  "output_data": "{{vars.result}}"
                 }
               },
               "left": "188",
@@ -468,12 +463,11 @@
                 "name": "Microsoft Graph API",
                 "config": "''",
                 "params": [],
-                "version": "2.0.0",
+                "version": "2.1.0",
                 "connector": "microsoft-graph",
                 "operation": "get_groups",
                 "operationTitle": "Get Groups",
                 "step_variables": {
-                  "output_data": "{{vars.result}}"
                 }
               },
               "left": "188",
@@ -548,12 +542,11 @@
                 "name": "Microsoft Graph API",
                 "config": "''",
                 "params": [],
-                "version": "2.0.0",
+                "version": "2.1.0",
                 "connector": "microsoft-graph",
                 "operation": "get_group_users",
                 "operationTitle": "Get Users Within A Group",
                 "step_variables": {
-                  "output_data": "{{vars.result}}"
                 }
               },
               "left": "188",
@@ -628,12 +621,11 @@
                 "name": "Microsoft Graph API",
                 "config": "''",
                 "params": [],
-                "version": "2.0.0",
+                "version": "2.1.0",
                 "connector": "microsoft-graph",
                 "operation": "search_message",
                 "operationTitle": "Search Message in Users Mailbox",
                 "step_variables": {
-                  "output_data": "{{vars.result}}"
                 }
               },
               "left": "188",
@@ -708,12 +700,11 @@
                 "name": "Microsoft Graph API",
                 "config": "''",
                 "params": [],
-                "version": "2.0.0",
+                "version": "2.1.0",
                 "connector": "microsoft-graph",
                 "operation": "del_message",
                 "operationTitle": "Delete Message",
                 "step_variables": {
-                  "output_data": "{{vars.result}}"
                 }
               },
               "left": "188",
@@ -790,12 +781,11 @@
                 "params": {
                   "user_list": []
                 },
-                "version": "2.0.0",
+                "version": "2.1.0",
                 "connector": "microsoft-graph",
                 "operation": "del_message_bulk",
                 "operationTitle": "Delete Message Bulk",
                 "step_variables": {
-                  "output_data": "{{vars.result}}"
                 }
               },
               "left": "188",
@@ -870,12 +860,11 @@
                 "name": "Microsoft Graph API",
                 "config": "''",
                 "params": [],
-                "version": "2.0.0",
+                "version": "2.1.0",
                 "connector": "microsoft-graph",
                 "operation": "revoke_user_sessions",
                 "operationTitle": "Revoke User Session",
                 "step_variables": {
-                  "output_data": "{{vars.result}}"
                 }
               },
               "left": "188",
@@ -952,12 +941,11 @@
                 "params": {
                   "count": false
                 },
-                "version": "2.0.0",
+                "version": "2.1.0",
                 "connector": "microsoft-graph",
                 "operation": "get_all_named_locations",
                 "operationTitle": "Get All Named Locations",
                 "step_variables": {
-                  "output_data": "{{vars.result}}"
                 }
               },
               "left": "188",
@@ -1032,12 +1020,11 @@
                 "name": "Microsoft Graph API",
                 "config": "''",
                 "params": [],
-                "version": "2.0.0",
+                "version": "2.1.0",
                 "connector": "microsoft-graph",
                 "operation": "block_new_ips",
                 "operationTitle": "Block New IP Ranges",
                 "step_variables": {
-                  "output_data": "{{vars.result}}"
                 }
               },
               "left": "188",
@@ -1112,12 +1099,11 @@
                 "name": "Microsoft Graph API",
                 "config": "''",
                 "params": [],
-                "version": "2.0.0",
+                "version": "2.1.0",
                 "connector": "microsoft-graph",
                 "operation": "unblock_new_ips",
                 "operationTitle": "Unblock IP Ranges",
                 "step_variables": {
-                  "output_data": "{{vars.result}}"
                 }
               },
               "left": "188",
@@ -1194,12 +1180,11 @@
                 "params": {
                   "is_trusted": false
                 },
-                "version": "2.0.0",
+                "version": "2.1.0",
                 "connector": "microsoft-graph",
                 "operation": "create_ip_range_location",
                 "operationTitle": "Create IP Named Location",
                 "step_variables": {
-                  "output_data": "{{vars.result}}"
                 }
               },
               "left": "188",

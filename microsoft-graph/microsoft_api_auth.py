@@ -3,13 +3,15 @@
   All rights reserved.
   FORTINET CONFIDENTIAL & FORTINET PROPRIETARY SOURCE CODE
   Copyright end """
-
+import msal
+from urllib.parse import urljoin
 from requests import request
 from time import time, ctime
 from datetime import datetime
 from connectors.core.connector import get_logger, ConnectorError
 from connectors.core.utils import update_connnector_config
 from .constants import *
+from integrations.crudhub import make_request
 
 logger = get_logger('microsoft_graph')
 
@@ -31,6 +33,7 @@ class MicrosoftAuth:
         tenant_id = config.get('tenant')
         self.auth_url = '{0}/{1}'.format(AUTH_URL, tenant_id)
         self.auth_type = config.get("auth_type")
+        logger.debug("Auth Type: {}".format(self.auth_type))
         self.token_url = "{0}/{1}/oauth2/v2.0/token".format(AUTH_URL, tenant_id)
         if self.auth_type == AUTH_BEHALF_OF_USER:
             self.refresh_token = ""
@@ -39,6 +42,14 @@ class MicrosoftAuth:
                 self.redirect_url = DEFAULT_REDIRECT_URL
             else:
                 self.redirect_url = config.get("redirect_url")
+        if self.auth_type == CERTIFICATE_BASED_AUTH_TYPE:
+            self.thumbprint = config.get('thumbprint')
+            self.authority = urljoin(AUTH_URL, tenant_id)
+            if isinstance(config.get('private_key', {}), dict) and config.get('private_key', {}).get('@type') == "File":
+                private_key_file_iri = config.get('private_key', {}).get('@id')
+                logger.debug('certificate file iri: {}'.format(private_key_file_iri))
+                self.private_key = make_request(private_key_file_iri, 'GET')
+
 
     def convert_ts_epoch(self, ts):
         datetime_object = datetime.strptime(ctime(ts), "%a %b %d %H:%M:%S %Y")
@@ -46,48 +57,62 @@ class MicrosoftAuth:
 
     def generate_token(self, REFRESH_TOKEN_FLAG):
         try:
-            if not self.auth_type == AUTH_BEHALF_OF_USER:
+            if self.auth_type == AUTH_USING_APP:
                 resp = self.acquire_token_with_client_credentials()
-                ts_now = time()
-                resp['expiresOn'] = (ts_now + resp['expires_in']) if resp.get("expires_in") else None
-                resp['accessToken'] = resp.get("access_token")
-                resp.pop("access_token")
-                return resp
+            elif self.auth_type == CERTIFICATE_BASED_AUTH_TYPE:
+                resp = self.generate_token_using_certificate()
             else:
                 resp = self.acquire_token_on_behalf_of_user(REFRESH_TOKEN_FLAG)
-                ts_now = time()
-                resp['expiresOn'] = (ts_now + resp['expires_in']) if resp.get("expires_in") else None
-                resp['accessToken'] = resp.get("access_token")
-                resp.pop("access_token")
-                return resp
+            ts_now = time()
+            resp['expiresOn'] = (ts_now + resp['expires_in']) if resp.get("expires_in") else None
+            resp['accessToken'] = resp.get("access_token")
+            resp.pop("access_token")
+            return resp
+
         except Exception as err:
             logger.error("{0}".format(err))
             raise ConnectorError("{0}".format(err))
 
     def validate_token(self, connector_config, connector_info):
-        if CONFIG_SUPPORTS_TOKEN:
-            ts_now = time()
-            if not connector_config.get('accessToken'):
-                logger.error('Error occurred while connecting server: Unauthorized')
-                raise ConnectorError('Error occurred while connecting server: Unauthorized')
-            expires = connector_config['expiresOn']
-            expires_ts = self.convert_ts_epoch(expires)
-            if ts_now > float(expires_ts):
-                REFRESH_TOKEN_FLAG = True
-                logger.info("Token expired at {0}".format(expires))
-                self.refresh_token = connector_config["refresh_token"]
-                token_resp = self.generate_token(REFRESH_TOKEN_FLAG)
-                connector_config['accessToken'] = token_resp['accessToken']
-                connector_config['expiresOn'] = token_resp['expiresOn']
-                connector_config['refresh_token'] = token_resp.get('refresh_token')
-                update_connnector_config(connector_info['connector_name'], connector_info['connector_version'],
-                                         connector_config,
-                                         connector_config['config_id'])
+        ts_now = time()
+        if not connector_config.get('accessToken'):
+            logger.error('Error occurred while connecting server: Unauthorized')
+            raise ConnectorError('Error occurred while connecting server: Unauthorized')
+        expires = connector_config['expiresOn']
+        expires_ts = self.convert_ts_epoch(expires)
+        if ts_now > float(expires_ts):
+            REFRESH_TOKEN_FLAG = True
+            logger.info("Token expired at {0}".format(expires))
+            self.refresh_token = connector_config["refresh_token"]
+            token_resp = self.generate_token(REFRESH_TOKEN_FLAG)
+            connector_config['accessToken'] = token_resp['accessToken']
+            connector_config['expiresOn'] = token_resp['expiresOn']
+            connector_config['refresh_token'] = token_resp.get('refresh_token')
+            update_connnector_config(connector_info['connector_name'], connector_info['connector_version'],
+                                     connector_config,
+                                     connector_config['config_id'])
 
-                return "Bearer {0}".format(connector_config.get('accessToken'))
-            else:
-                logger.info("Token is valid till {0}".format(expires))
-                return "Bearer {0}".format(connector_config.get('accessToken'))
+            return "Bearer {0}".format(connector_config.get('accessToken'))
+        else:
+            logger.info("Token is valid till {0}".format(expires))
+            return "Bearer {0}".format(connector_config.get('accessToken'))
+
+    def generate_token_using_certificate(self):
+        try:
+            app = msal.ConfidentialClientApplication(self.client_id, authority=self.authority,
+                                                     client_credential={"thumbprint": self.thumbprint,
+                                                                        "private_key": self.private_key})
+
+            token_resp = app.acquire_token_for_client(scopes=[SCOPE])
+            error_code = token_resp.get('error')
+            if error_code:
+                error_description = token_resp.get('error_description')
+                raise ConnectorError(error_description)
+            return token_resp
+
+        except Exception as err:
+            logger.exception("{0}".format(err))
+            raise ConnectorError("{0}".format(err))
 
     def acquire_token_with_client_credentials(self):
         try:
@@ -161,17 +186,16 @@ class MicrosoftAuth:
 def check(config, connector_info):
     try:
         ms = MicrosoftAuth(config)
-        if CONFIG_SUPPORTS_TOKEN:
-            if not 'accessToken' in config:
-                token_resp = ms.generate_token(REFRESH_TOKEN_FLAG)
-                config['accessToken'] = token_resp.get('accessToken')
-                config['expiresOn'] = token_resp.get('expiresOn')
-                config['refresh_token'] = token_resp.get('refresh_token')
-                update_connnector_config(connector_info['connector_name'], connector_info['connector_version'], config,
-                                         config['config_id'])
-                return True
-            else:
-                token_resp = ms.validate_token(config, connector_info)
-                return True
+        if not 'accessToken' in config:
+            token_resp = ms.generate_token(REFRESH_TOKEN_FLAG)
+            config['accessToken'] = token_resp.get('accessToken')
+            config['expiresOn'] = token_resp.get('expiresOn')
+            config['refresh_token'] = token_resp.get('refresh_token')
+            update_connnector_config(connector_info['connector_name'], connector_info['connector_version'], config,
+                                     config['config_id'])
+            return True
+        else:
+            token_resp = ms.validate_token(config, connector_info)
+            return True
     except Exception as err:
         raise ConnectorError(str(err))
