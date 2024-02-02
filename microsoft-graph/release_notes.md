@@ -1,5 +1,3 @@
 #### What's Improved
-- Added support for the Delegate access token type. 
-- Removed configuration parameter `API Version`.
-- Added `Unblock IP Ranges` action
-- Added `Create IP Named Location` action
+- Added support for a certificate-based authentication method. 
+  - Added `Certificate Based Autentication` new options for the `Get Access Token` configuration parameter 

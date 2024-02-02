@@ -1,7 +1,7 @@
 {
   "name": "microsoft-graph",
   "label": "Microsoft Graph API",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "Microsoft Graph API is a powerful and unified programming interface provided by Microsoft that allows developers to access a wide range of data and services from Microsoft 365 and Azure Active Directory (Azure AD). It provides a single endpoint and a consistent set of RESTful web APIs, making it easier for developers to integrate and interact with Microsoft's cloud services and applications.",
   "publisher": "Fortinet",
   "cs_approved": true,
@@ -9,50 +9,10 @@
   "category": "Utilities",
   "icon_small_name": "small.png",
   "icon_large_name": "large.png",
-  "help_online": "https://docs.fortinet.com/document/fortisoar/2.0.0/microsoft-graph-api/693/microsoft-graph-api-v2-0-0",
+  "help_online": "",
   "ingestion_supported": false,
   "configuration": {
     "fields": [
-      {
-        "title": "Server URL",
-        "required": true,
-        "editable": true,
-        "visible": true,
-        "type": "text",
-        "name": "resource",
-        "value": "https://graph.microsoft.com",
-        "description": "Specify the service-based URI to connect and perform automated operations."
-      },
-      {
-        "title": "Tenant ID",
-        "description": "Specify the ID of the tenant assigned to you by the Azure application registration portal.",
-        "tooltip": "Specify the ID of the tenant assigned to you by the Azure application registration portal.",
-        "required": true,
-        "editable": true,
-        "visible": true,
-        "type": "text",
-        "name": "tenant"
-      },
-      {
-        "title": "Client ID",
-        "description": "Specify the Unique Application ID of the Azure Active Directory application to create an authentication token required to access the API. For information on getting authentication tokens, see the Getting Authentication Tokens section.",
-        "required": true,
-        "editable": true,
-        "visible": true,
-        "type": "text",
-        "name": "client_id",
-        "tooltip": "Specify the Unique Application ID of the Azure Active Directory application to create an authentication token required to access the API. For information on getting authentication tokens, see the Getting Authentication Tokens section."
-      },
-      {
-        "title": "Client Secret",
-        "description": "Specify the Unique Client Secret of the Azure Active Directory application that is used to create an authentication token required to access the API. For information on how to get the secret key, see https://docs.microsoft.com/en-us/windows/security/threat-protection/microsoft-defender-atp/exposed-apis-create-app-webapp.",
-        "required": true,
-        "editable": true,
-        "visible": true,
-        "type": "password",
-        "name": "client_secret",
-        "tooltip": "Specify the Unique Client Secret of the Azure Active Directory application that is used to create an authentication token required to access the API."
-      },
       {
         "title": "Get Access Token",
         "required": true,
@@ -61,14 +21,97 @@
         "type": "select",
         "options": [
           "Without a User - Application Permission",
-          "On behalf of User - Delegate Permission"
+          "On behalf of User - Delegate Permission",
+          "Certificate Based Authentication"
         ],
         "name": "auth_type",
         "value": "Without a User - Application Permission",
-        "description": "Select the method using which you will get authentication tokens used to access the security graph APIs. You can choose between On behalf of User - Delegate Permission or Without a User - Application Permission.",
+        "description": "Select the method using which you will get authentication tokens used to access the security graph APIs. You can choose between On behalf of User - Delegate Permission, Without a User - Application Permission or Certificate Based Authentication.",
         "tooltip": "Select the method using which you will get authentication tokens used to access the security graph APIs.",
         "onchange": {
+          "Without a User - Application Permission": [
+            {
+              "title": "Server URL",
+              "required": true,
+              "editable": true,
+              "visible": true,
+              "type": "text",
+              "name": "resource",
+              "value": "https://graph.microsoft.com",
+              "description": "Specify the service-based URI to connect and perform automated operations."
+            },
+            {
+              "title": "Tenant ID",
+              "description": "Specify the ID of the tenant assigned to you by the Azure application registration portal.",
+              "tooltip": "Specify the ID of the tenant assigned to you by the Azure application registration portal.",
+              "required": true,
+              "editable": true,
+              "visible": true,
+              "type": "text",
+              "name": "tenant"
+            },
+            {
+              "title": "Client ID",
+              "description": "Specify the Unique Application ID of the Azure Active Directory application to create an authentication token required to access the API. For information on getting authentication tokens, see the Getting Authentication Tokens section.",
+              "required": true,
+              "editable": true,
+              "visible": true,
+              "type": "text",
+              "name": "client_id",
+              "tooltip": "Specify the Unique Application ID of the Azure Active Directory application to create an authentication token required to access the API. For information on getting authentication tokens, see the Getting Authentication Tokens section."
+            },
+            {
+              "title": "Client Secret",
+              "description": "Specify the Unique Client Secret of the Azure Active Directory application that is used to create an authentication token required to access the API. For information on how to get the secret key, see https://docs.microsoft.com/en-us/windows/security/threat-protection/microsoft-defender-atp/exposed-apis-create-app-webapp.",
+              "required": true,
+              "editable": true,
+              "visible": true,
+              "type": "password",
+              "name": "client_secret",
+              "tooltip": "Specify the Unique Client Secret of the Azure Active Directory application that is used to create an authentication token required to access the API."
+            }
+          ],
           "On behalf of User - Delegate Permission": [
+            {
+              "title": "Server URL",
+              "required": true,
+              "editable": true,
+              "visible": true,
+              "type": "text",
+              "name": "resource",
+              "value": "https://graph.microsoft.com",
+              "description": "Specify the service-based URI to connect and perform automated operations."
+            },
+            {
+              "title": "Tenant ID",
+              "description": "Specify the ID of the tenant assigned to you by the Azure application registration portal.",
+              "tooltip": "Specify the ID of the tenant assigned to you by the Azure application registration portal.",
+              "required": true,
+              "editable": true,
+              "visible": true,
+              "type": "text",
+              "name": "tenant"
+            },
+            {
+              "title": "Client ID",
+              "description": "Specify the Unique Application ID of the Azure Active Directory application to create an authentication token required to access the API. For information on getting authentication tokens, see the Getting Authentication Tokens section.",
+              "required": true,
+              "editable": true,
+              "visible": true,
+              "type": "text",
+              "name": "client_id",
+              "tooltip": "Specify the Unique Application ID of the Azure Active Directory application to create an authentication token required to access the API. For information on getting authentication tokens, see the Getting Authentication Tokens section."
+            },
+            {
+              "title": "Client Secret",
+              "description": "Specify the Unique Client Secret of the Azure Active Directory application that is used to create an authentication token required to access the API. For information on how to get the secret key, see https://docs.microsoft.com/en-us/windows/security/threat-protection/microsoft-defender-atp/exposed-apis-create-app-webapp.",
+              "required": true,
+              "editable": true,
+              "visible": true,
+              "type": "password",
+              "name": "client_secret",
+              "tooltip": "Specify the Unique Client Secret of the Azure Active Directory application that is used to create an authentication token required to access the API."
+            },
             {
               "title": "Authorization Code",
               "required": true,
@@ -89,6 +132,58 @@
               "name": "redirect_url",
               "placeholder": "e.g. https://localhost/myapp",
               "description": "The redirect_uri of your app, where authentication responses can be sent and received by your app. The redirect URL that you specify here must exactly match one of the redirect_uri's you have registered in your app registration portal."
+            }
+          ],
+          "Certificate Based Authentication": [
+            {
+              "title": "Server URL",
+              "required": true,
+              "editable": true,
+              "visible": true,
+              "type": "text",
+              "name": "resource",
+              "value": "https://graph.microsoft.com",
+              "description": "Specify the service-based URI to connect and perform automated operations."
+            },
+            {
+              "title": "Tenant ID",
+              "description": "Specify the ID of the tenant assigned to you by the Azure application registration portal.",
+              "tooltip": "Specify the ID of the tenant assigned to you by the Azure application registration portal.",
+              "required": true,
+              "editable": true,
+              "visible": true,
+              "type": "text",
+              "name": "tenant"
+            },
+            {
+              "title": "Client ID",
+              "description": "Specify the Unique Application ID of the Azure Active Directory application to create an authentication token required to access the API. For information on getting authentication tokens, see the Getting Authentication Tokens section.",
+              "required": true,
+              "editable": true,
+              "visible": true,
+              "type": "text",
+              "name": "client_id",
+              "tooltip": "Specify the Unique Application ID of the Azure Active Directory application to create an authentication token required to access the API. For information on getting authentication tokens, see the Getting Authentication Tokens section."
+            },
+            {
+              "title": "Certificate Thumbprint",
+              "type": "password",
+              "name": "thumbprint",
+              "description": "Provides a thumbprint, fingerprint, or hash, which is a unique identifier generated from a digital certificate using a cryptographic hash function.",
+               "tooltip": "Provides a thumbprint, fingerprint, or hash, which is a unique identifier generated from a digital certificate using a cryptographic hash function.",
+              "required": true,
+              "editable": true,
+              "visible": true
+            },
+            {
+              "title": "Certificate File",
+              "name": "private_key",
+              "type": "file",
+              "tooltip": "Upload a certificate (public key) with one of the following file types: .cer, .pem, .crt",
+              "description": "Upload a certificate (public key) with one of the following file types: .cer, .pem, .crt",
+              "editable": true,
+              "visible": true,
+              "required": true
             }
           ]
         }

@@ -1,20 +1,16 @@
 """ Copyright start
-  Copyright (C) 2008 - 2023 Fortinet Inc.
+  Copyright (C) 2008 - 2024 Fortinet Inc.
   All rights reserved.
   FORTINET CONFIDENTIAL & FORTINET PROPRIETARY SOURCE CODE
   Copyright end """
-
-from .utils import _list
 from queue import Queue
 from threading import Thread
 import threading
 import requests
 from .microsoft_api_auth import *
-import logging
-
-
+from .utils import _list
+from connectors.core.connector import get_logger, ConnectorError
 logger = get_logger('microsoft_graph')
-# logger.setLevel(logging.DEBUG) # Uncomment to enable local debug
 
 
 class SetupSession(object):

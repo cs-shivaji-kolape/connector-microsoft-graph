@@ -1,5 +1,5 @@
 """ Copyright start
-  Copyright (C) 2008 - 2023 Fortinet Inc.
+  Copyright (C) 2008 - 2024 Fortinet Inc.
   All rights reserved.
   FORTINET CONFIDENTIAL & FORTINET PROPRIETARY SOURCE CODE
   Copyright end """
@@ -15,7 +15,7 @@ def _list(user_list):
     elif isinstance(user_list, tuple):
         user_list = list(user_list)
     elif isinstance(user_list, list):
-        user_list
+        return user_list
     else:
         logger.error('Incorrect Input')
         raise ConnectorError('Incorrect Input')
