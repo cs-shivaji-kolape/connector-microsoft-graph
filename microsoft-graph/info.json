@@ -179,8 +179,8 @@
               "title": "Certificate File",
               "name": "private_key",
               "type": "file",
-              "tooltip": "Upload a certificate (public key) with one of the following file types: .cer, .pem, .crt",
-              "description": "Upload a certificate (public key) with one of the following file types: .cer, .pem, .crt",
+              "tooltip": "Upload a certificate (private key) with one of the following file types: .cer, .pem, .crt",
+              "description": "Upload a certificate (private key) with one of the following file types: .cer, .pem, .crt",
               "editable": true,
               "visible": true,
               "required": true
