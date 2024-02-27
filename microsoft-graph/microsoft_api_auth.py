@@ -4,7 +4,7 @@ MIT License
 Copyright (c) 2024 Fortinet Inc
 Copyright end
 """
-import msal
+import msal, base64
 from urllib.parse import urljoin
 from requests import request
 from time import time, ctime
@@ -49,8 +49,12 @@ class MicrosoftAuth:
             if isinstance(config.get('private_key', {}), dict) and config.get('private_key', {}).get('@type') == "File":
                 private_key_file_iri = config.get('private_key', {}).get('@id')
                 logger.debug('certificate file iri: {}'.format(private_key_file_iri))
-                self.private_key = make_request(private_key_file_iri, 'GET')
-
+                self.private_key = self.private_key = make_request(private_key_file_iri, 'GET')
+                try:
+                    # agent machine make_rest call to retrieve file data in encoded format
+                    self.private_key = base64.b64decode(self.private_key, validate=True)
+                except Exception as e:
+                    pass
 
     def convert_ts_epoch(self, ts):
         datetime_object = datetime.strptime(ctime(ts), "%a %b %d %H:%M:%S %Y")
