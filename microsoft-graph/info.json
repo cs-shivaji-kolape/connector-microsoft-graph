@@ -9,7 +9,7 @@
   "category": "Utilities",
   "icon_small_name": "small.png",
   "icon_large_name": "large.png",
-  "help_online": "",
+  "help_online": "https://docs.fortinet.com/document/fortisoar/2.1.0/microsoft-graph-api/825/microsoft-graph-api-v2-1-0",
   "ingestion_supported": false,
   "configuration": {
     "fields": [

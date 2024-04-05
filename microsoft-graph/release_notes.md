@@ -1,3 +1,3 @@
 #### What's Improved
 - Added support for a certificate-based authentication method. 
-  - Added `Certificate Based Autentication` new options for the `Get Access Token` configuration parameter 
+  - Certificate Based Authentication is a new option in the configuration parameter Get Access Token.
