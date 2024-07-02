@@ -170,7 +170,7 @@
               "type": "password",
               "name": "thumbprint",
               "description": "Provides a thumbprint, fingerprint, or hash, which is a unique identifier generated from a digital certificate using a cryptographic hash function.",
-               "tooltip": "Provides a thumbprint, fingerprint, or hash, which is a unique identifier generated from a digital certificate using a cryptographic hash function.",
+              "tooltip": "Provides a thumbprint, fingerprint, or hash, which is a unique identifier generated from a digital certificate using a cryptographic hash function.",
               "required": true,
               "editable": true,
               "visible": true
@@ -267,53 +267,186 @@
       "annotation": "get_all_security_alerts",
       "parameters": [
         {
-          "title": "Vendor",
-          "description": "Specify the name of the product vendor that provided the alert you want to retrieve using Microsoft Graph API. For example, Microsoft",
-          "required": false,
-          "editable": true,
-          "visible": true,
-          "type": "text",
-          "name": "vendor",
-          "tooltip": "Specify the name of the vendor for the product that provided the alert you want to retrieve using Microsoft Graph API.",
-          "placeholder": "e.g Microsoft"
-        },
-        {
-          "title": "Provider",
-          "description": "Specify the security product that provided the alert you want to retrieve using Microsoft Graph API. For example, Cloud Application Security",
-          "required": false,
-          "editable": true,
-          "visible": true,
-          "type": "text",
-          "name": "provider",
-          "tooltip": "Specify the security product that provided the alert you want to retrieve using Microsoft Graph API. For example, Cloud Application Security.",
-          "placeholder": "e.g Cloud Application Security"
-        },
-        {
-          "title": "Severity",
-          "description": "Select the alert severity, set by the vendor or provider, to retrieve alerts using Microsoft Graph API. You can choose from the following options: Unknown Low Medium High Informational",
-          "tooltip": "Select the alert severity, which is set by the vendor or provider based on which you want to retrieve alerts using Microsoft Graph API",
-          "required": false,
-          "editable": true,
-          "visible": true,
+          "title": "API Version",
           "type": "select",
-          "options": [
-            "Unknown",
-            "Low",
-            "Medium",
-            "High",
-            "Informational"
-          ],
-          "name": "severity"
-        },
-        {
-          "title": "Search From",
-          "description": "Select the date and time of alert triggering event(s) to retrieve using Microsoft Graph API.",
-          "tooltip": "Select the DateTime at which the event(s) that served as the trigger(s) to generate the alert you want to retrieve using Microsoft Graph API.",
+          "name": "api_version",
+          "description": "Select the version of the API. If the user selects V1, this refers to the original or older version of the alerts API. If the user selects V2, this provides comprehensive information and detailed context about alerts.",
+          "tooltip": "Select the version of the API. If the user selects V1, this refers to the original or older version of the alerts API. If the user selects V2, this provides comprehensive information and detailed context about alerts.",
           "required": false,
           "editable": true,
           "visible": true,
-          "type": "datetime",
-          "name": "search_from"
+          "options": [
+            "V1",
+            "V2"
+          ],
+          "value": "V1",
+          "onchange": {
+            "V1": [
+              {
+                "title": "Vendor",
+                "description": "Specify the name of the product vendor that provided the alert you want to retrieve using Microsoft Graph API. For example, Microsoft",
+                "required": false,
+                "editable": true,
+                "visible": true,
+                "type": "text",
+                "name": "vendor",
+                "tooltip": "Specify the name of the vendor for the product that provided the alert you want to retrieve using Microsoft Graph API.",
+                "placeholder": "e.g Microsoft"
+              },
+              {
+                "title": "Provider",
+                "description": "Specify the security product that provided the alert you want to retrieve using Microsoft Graph API. For example, Cloud Application Security",
+                "required": false,
+                "editable": true,
+                "visible": true,
+                "type": "text",
+                "name": "provider",
+                "tooltip": "Specify the security product that provided the alert you want to retrieve using Microsoft Graph API. For example, Cloud Application Security.",
+                "placeholder": "e.g Cloud Application Security"
+              },
+              {
+                "title": "Severity",
+                "description": "Select the alert severity, set by the vendor or provider, to retrieve alerts using Microsoft Graph API. You can choose from the following options: Unknown Low Medium High Informational",
+                "tooltip": "Select the alert severity, which is set by the vendor or provider based on which you want to retrieve alerts using Microsoft Graph API",
+                "required": false,
+                "editable": true,
+                "visible": true,
+                "type": "select",
+                "options": [
+                  "Unknown",
+                  "Low",
+                  "Medium",
+                  "High",
+                  "Informational"
+                ],
+                "name": "severity"
+              },
+              {
+                "title": "Search From",
+                "description": "Select the date and time of alert triggering event(s) to retrieve using Microsoft Graph API.",
+                "tooltip": "Select the DateTime at which the event(s) that served as the trigger(s) to generate the alert you want to retrieve using Microsoft Graph API.",
+                "required": false,
+                "editable": true,
+                "visible": true,
+                "type": "datetime",
+                "name": "search_from"
+              }
+            ],
+            "V2": [
+              {
+                "title": "Classification",
+                "name": "classification",
+                "type": "select",
+                "description": "Select the classification to filter alerts based on the selected classification. Possible values are: Unknown, False Positive, True Positive, Informational Expected Activity, Unknown Future Value",
+                "required": false,
+                "editable": true,
+                "visible": true,
+                "tooltip": "Select the classification to filter alerts based on the selected classification. Possible values are: Unknown, False Positive, True Positive, Informational Expected Activity, Unknown Future Value",
+                "options": [
+                  "Unknown",
+                  "False Positive",
+                  "True Positive",
+                  "Informational Expected Activity",
+                  "Unknown Future Value"
+                ]
+              },
+              {
+                "title": "Determination",
+                "name": "determination",
+                "description": "Select the determination to filter alerts based on the Selected determination. Possible values are: Unknown, ATP, Malware, Security Personnel, Security Testing, Unwanted Software, Other, MultiStaged Attack, Compromised User, Phishing, Malicious User Activity, Clean, Insufficient Data, Confirmed User Activity, lLne Of Business Application, Unknown Future Value",
+                "required": false,
+                "editable": true,
+                "visible": true,
+                "type": "select",
+                "tooltip": "Select the determination to filter alerts based on the Selected determination. Possible values are: Unknown, ATP, Malware, Security Personnel, Security Testing, Unwanted Software, Other, MultiStaged Attack, Compromised User, Phishing, Malicious User Activity, Clean, Insufficient Data, Confirmed User Activity, lLne Of Business Application, Unknown Future Value",
+                "options": [
+                  "Unknown",
+                  "ATP",
+                  "Malware",
+                  "Security Personnel",
+                  "Security Testing",
+                  "Unwanted Software",
+                  "Other",
+                  "MultiStaged Attack",
+                  "Compromised User",
+                  "Phishing",
+                  "Malicious User Activity",
+                  "Clean",
+                  "Insufficient Data",
+                  "Confirmed User Activity",
+                  "Line Of Business Application",
+                  "Unknown Future Value"
+                ]
+              },
+              {
+                "title": "Status",
+                "description": "(Optional) Select the status to filter alerts based on the Selected status. You can choose from the following options: Unknown, New Alert, In Progress, or Resolved.",
+                "required": false,
+                "editable": true,
+                "visible": true,
+                "type": "select",
+                "tooltip": "Select the status to filter alerts based on the Selected status.",
+                "options": [
+                  "Unknown Future Value",
+                  "New Alert",
+                  "In Progress",
+                  "Resolved"
+                ],
+                "name": "status"
+              },
+              {
+                "title": "Created Date",
+                "name": "createdDateTime",
+                "type": "datetime",
+                "description": "(Optional) Specify the creation date to filter alerts created after the specified date.",
+                "tooltip": "Specify the creation date to filter alerts created after the specified date.",
+                "required": false,
+                "editable": true,
+                "visible": true
+              },
+              {
+                "title": "Last Update Date",
+                "name": "lastUpdateDateTime",
+                "type": "datetime",
+                "description": "(Optional) Specify the modified date to filter alerts modified after the specified.",
+                "tooltip": "Specify the modified date to filter alerts modified after the specified.",
+                "required": false,
+                "editable": true,
+                "visible": true
+              },
+              {
+                "title": "Severity",
+                "name": "severity",
+                "type": "select",
+                "description": "(Optional) Specify the severity of the alert to filter alerts based on the specified severity.",
+                "tooltip": "Specify the severity of the alert to filter alerts based on the specified severity.",
+                "required": false,
+                "editable": true,
+                "visible": true,
+                "options": ["Unknown", "Informational", "Low", "Medium", "High", "Unknown Future Value"]
+              },
+              {
+                "title": "Service Source",
+                "name": "serviceSource",
+                "type": "text",
+                "description": "(Optional) Specify the service source of the alert to filter alerts based on the specified service source.",
+                "tooltip": "Specify the service source of the alert to filter alerts based on the specified service source.",
+                "required": false,
+                "editable": true,
+                "visible": true
+              }
+            ]
+          }
+        },
+         {
+          "title": "Assigned To",
+          "description": "(Optional) Specify the name of the analyst to filter alerts assigned to that specific analyst.",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "text",
+          "tooltip": "Specify the name of the analyst to filter alerts assigned to that specific analyst.",
+          "name": "assigned_to"
         }
       ],
       "output_schema": {
@@ -378,6 +511,21 @@
       "category": "investigation",
       "annotation": "get_security_alert",
       "parameters": [
+        {
+          "title": "API Version",
+          "type": "select",
+          "name": "api_version",
+          "description": "Select the version of the API. If the user selects V1, this refers to the original or older version of the alerts API. If the user selects V2, this provides comprehensive information and detailed context about alerts.",
+          "tooltip": "Select the version of the API. If the user selects V1, this refers to the original or older version of the alerts API. If the user selects V2, this provides comprehensive information and detailed context about alerts.",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "options": [
+            "V1",
+            "V2"
+          ],
+          "value": "V1"
+        },
         {
           "title": "Alert ID",
           "description": "Specify the unique Alert ID to retrieve that alert from Microsoft Graph API. The alert ID is generated by the provider when an alert is created in Azure.",
@@ -470,26 +618,185 @@
           "name": "alert_id"
         },
         {
-          "title": "Provider",
-          "description": "Specify the provider of product or service in Azure to update in the specific alert in Azure. For example, WindowsDefenderATP.",
-          "required": true,
+          "title": "API Version",
+          "type": "select",
+          "name": "api_version",
+          "description": "Select the version of the API. If the user selects V1, it refers to the original or older version of the API for updating alerts. If the user selects V2, it updates alerts using the newly supported V2 alert information.",
+          "tooltip": "Select the version of the API. If the user selects V1, it refers to the original or older version of the API for updating alerts. If the user selects V2, it updates alerts using the newly supported V2 alert information.",
+          "required": false,
           "editable": true,
           "visible": true,
-          "tooltip": "Specify the provider of product or service in Azure that you want to update in the specific alert in Azure. For example, WindowsDefenderATP.",
-          "type": "text",
-          "name": "provider",
-          "placeholder": "e.g WindowsDefenderATP"
-        },
-        {
-          "title": "Vendor",
-          "description": "Specify the name of the vendor to update in the specific alert in Azure. For example, Microsoft.",
-          "required": true,
-          "editable": true,
-          "visible": true,
-          "tooltip": "Specify the name of the vendor of the alert that you want to update in the specific alert in Azure. For example, Microsoft.",
-          "type": "text",
-          "name": "vendor",
-          "placeholder": "e.g Microsoft"
+          "options": [
+            "V1",
+            "V2"
+          ],
+          "value": "V1",
+          "onchange": {
+            "V1": [
+              {
+                "title": "Provider",
+                "description": "Specify the provider of product or service in Azure to update in the specific alert in Azure. For example, WindowsDefenderATP.",
+                "required": true,
+                "editable": true,
+                "visible": true,
+                "tooltip": "Specify the provider of product or service in Azure that you want to update in the specific alert in Azure. For example, WindowsDefenderATP.",
+                "type": "text",
+                "name": "provider",
+                "placeholder": "e.g WindowsDefenderATP"
+              },
+              {
+                "title": "Vendor",
+                "description": "Specify the name of the vendor to update in the specific alert in Azure. For example, Microsoft.",
+                "required": true,
+                "editable": true,
+                "visible": true,
+                "tooltip": "Specify the name of the vendor of the alert that you want to update in the specific alert in Azure. For example, Microsoft.",
+                "type": "text",
+                "name": "vendor",
+                "placeholder": "e.g Microsoft"
+              },
+              {
+                "title": "Feedback",
+                "description": "(Optional) Select the analyst feedback on the alert that you want to update in the specific alert in Azure. You can choose from the following options: Unknown, True Positive, False Positive, or Benign Positive.",
+                "required": false,
+                "editable": true,
+                "visible": true,
+                "type": "select",
+                "tooltip": "Select the analyst feedback on the alert that you want to update in the specific alert in Azure.",
+                "options": [
+                  "Unknown",
+                  "True Positive",
+                  "False Positive",
+                  "Benign Positive"
+                ],
+                "name": "feedback"
+              },
+              {
+                "title": "Comments",
+                "description": "(Optional) Select the analyst comments that you want to update in the specific alert in Azure. You can choose between Closed in MCAS or Closed in IPS.",
+                "required": false,
+                "editable": true,
+                "visible": true,
+                "tooltip": "Select the analyst comments that you want to update in the specific alert in Azure.",
+                "type": "multiselect",
+                "options": [
+                  "Closed in MCAS",
+                  "Closed in IPC"
+                ],
+                "name": "comments"
+              },
+              {
+                "title": "Tags",
+                "description": "(Optional) Specify the JSON array of strings that store user-definable labels that can be applied to the alert that you want to update in Azure. These tags serve as filter conditions, and you can specify multiple tags using comma-based separators.",
+                "required": false,
+                "editable": true,
+                "visible": true,
+                "type": "text",
+                "tooltip": "Specify the JSON array of strings that store user-definable labels that can be applied to the alert that you want to update in Azure. These tags serve as filter conditions, and you can specify multiple tags using comma-based separators.",
+                "name": "tags"
+              },
+              {
+                "title": "Provider Version",
+                "description": "(Optional) Specify the version of the provider or sub-provider, if it exists, that generated the alert that you want to update in Azure.",
+                "required": false,
+                "editable": true,
+                "visible": true,
+                "tooltip": "Specify the version of the provider or sub-provider, if it exists, that generated the alert that you want to update in Azure.",
+                "type": "text",
+                "name": "providerVersion"
+              },
+              {
+                "title": "Subprovider",
+                "description": "(Optional) Specify the name of the sub-provider under the aggregating provider in Azure for the alert t that you want to update in Azure. For example, WindowsDefenderATP.SmartScreen",
+                "required": false,
+                "editable": true,
+                "visible": true,
+                "tooltip": "Specify the name of the sub-provider under the aggregating provider in Azure for the alert t that you want to update in Azure. For example, WindowsDefenderATP.SmartScreen.",
+                "type": "text",
+                "name": "subProvider",
+                "placeholder": "e.g WindowsDefenderATP.SmartScreen"
+              },
+              {
+                "title": "Status",
+                "description": "(Optional) Select the status (life cycle status) that you want to update in the specific alert in Azure. You can choose from the following options: Unknown, New Alert, In Progress, or Resolved.",
+                "required": false,
+                "editable": true,
+                "visible": true,
+                "type": "select",
+                "tooltip": "Select the status (life cycle status) that you want to update in the specific alert in Azure.",
+                "options": [
+                  "Unknown",
+                  "New Alert",
+                  "In Progress",
+                  "Resolved"
+                ],
+                "name": "status"
+              }
+            ],
+            "V2": [
+              {
+                "title": "Classification",
+                "name": "classification",
+                "type": "select",
+                "description": "Specifies the classification of the alert. Possible values are: Unknown, False Positive, True Positive, Informational Expected Activity, Unknown Future Value",
+                "required": false,
+                "editable": true,
+                "visible": true,
+                "tooltip": "Specifies the classification of the alert. Possible values are: Unknown, False Positive, True Positive, Informational Expected Activity, Unknown Future Value",
+                "options": [
+                  "Unknown",
+                  "False Positive",
+                  "True Positive",
+                  "Informational Expected Activity",
+                  "Unknown Future Value"
+                ]
+              },
+              {
+                "title": "Determination",
+                "name": "determination",
+                "description": "Specifies the determination of the alert. Possible values are: Unknown, ATP, Malware, Security Personnel, Security Testing, Unwanted Software, Other, MultiStaged Attack, Compromised User, Phishing, Malicious User Activity, Clean, Insufficient Data, Confirmed User Activity, lLne Of Business Application, Unknown Future Value",
+                "required": false,
+                "editable": true,
+                "visible": true,
+                "type": "select",
+                "tooltip": "Specifies the determination of the alert. Possible values are: Unknown, ATP, Malware, Security Personnel, Security Testing, Unwanted Software, Other, MultiStaged Attack, Compromised User, Phishing, Malicious User Activity, Clean, Insufficient Data, Confirmed User Activity, lLne Of Business Application, Unknown Future Value",
+                "options": [
+                  "Unknown",
+                  "ATP",
+                  "Malware",
+                  "Security Personnel",
+                  "Security Testing",
+                  "Unwanted Software",
+                  "Other",
+                  "MultiStaged Attack",
+                  "Compromised User",
+                  "Phishing",
+                  "Malicious User Activity",
+                  "Clean",
+                  "Insufficient Data",
+                  "Confirmed User Activity",
+                  "Line Of Business Application",
+                  "Unknown Future Value"
+                ]
+              },
+              {
+                "title": "Status",
+                "description": "(Optional) Select the status (life cycle status) that you want to update in the specific alert in Azure. You can choose from the following options: Unknown, New Alert, In Progress, or Resolved.",
+                "required": false,
+                "editable": true,
+                "visible": true,
+                "type": "select",
+                "tooltip": "Select the status (life cycle status) that you want to update in the specific alert in Azure.",
+                "options": [
+                  "Unknown Future Value",
+                  "New Alert",
+                  "In Progress",
+                  "Resolved"
+                ],
+                "name": "status"
+              }
+            ]
+          }
         },
         {
           "title": "Assigned To",
@@ -500,83 +807,6 @@
           "type": "text",
           "tooltip": "Specify the name of the analyst to whom you want to assign the specific alert that you want to update for triage, investigation, or remediation in Azure.",
           "name": "assigned_to"
-        },
-        {
-          "title": "Feedback",
-          "description": "(Optional) Select the analyst feedback on the alert that you want to update in the specific alert in Azure. You can choose from the following options: Unknown, True Positive, False Positive, or Benign Positive.",
-          "required": false,
-          "editable": true,
-          "visible": true,
-          "type": "select",
-          "tooltip": "Select the analyst feedback on the alert that you want to update in the specific alert in Azure.",
-          "options": [
-            "Unknown",
-            "True Positive",
-            "False Positive",
-            "Benign Positive"
-          ],
-          "name": "feedback"
-        },
-        {
-          "title": "Comments",
-          "description": "(Optional) Select the analyst comments that you want to update in the specific alert in Azure. You can choose between Closed in MCAS or Closed in IPS.",
-          "required": false,
-          "editable": true,
-          "visible": true,
-          "tooltip": "Select the analyst comments that you want to update in the specific alert in Azure.",
-          "type": "multiselect",
-          "options": [
-            "Closed in MCAS",
-            "Closed in IPC"
-          ],
-          "name": "comments"
-        },
-        {
-          "title": "Status",
-          "description": "(Optional) Select the status (life cycle status) that you want to update in the specific alert in Azure. You can choose from the following options: Unknown, New Alert, In Progress, or Resolved.",
-          "required": false,
-          "editable": true,
-          "visible": true,
-          "type": "select",
-          "tooltip": "Select the status (life cycle status) that you want to update in the specific alert in Azure.",
-          "options": [
-            "Unknown",
-            "New Alert",
-            "In Progress",
-            "Resolved"
-          ],
-          "name": "status"
-        },
-        {
-          "title": "Tags",
-          "description": "(Optional) Specify the JSON array of strings that store user-definable labels that can be applied to the alert that you want to update in Azure. These tags serve as filter conditions, and you can specify multiple tags using comma-based separators.",
-          "required": false,
-          "editable": true,
-          "visible": true,
-          "type": "text",
-          "tooltip": "Specify the JSON array of strings that store user-definable labels that can be applied to the alert that you want to update in Azure. These tags serve as filter conditions, and you can specify multiple tags using comma-based separators.",
-          "name": "tags"
-        },
-        {
-          "title": "Provider Version",
-          "description": "(Optional) Specify the version of the provider or sub-provider, if it exists, that generated the alert that you want to update in Azure.",
-          "required": false,
-          "editable": true,
-          "visible": true,
-          "tooltip": "Specify the version of the provider or sub-provider, if it exists, that generated the alert that you want to update in Azure.",
-          "type": "text",
-          "name": "providerVersion"
-        },
-        {
-          "title": "Subprovider",
-          "description": "(Optional) Specify the name of the sub-provider under the aggregating provider in Azure for the alert t that you want to update in Azure. For example, WindowsDefenderATP.SmartScreen",
-          "required": false,
-          "editable": true,
-          "visible": true,
-          "tooltip": "Specify the name of the sub-provider under the aggregating provider in Azure for the alert t that you want to update in Azure. For example, WindowsDefenderATP.SmartScreen.",
-          "type": "text",
-          "name": "subProvider",
-          "placeholder": "e.g WindowsDefenderATP.SmartScreen"
         }
       ],
       "output_schema": {

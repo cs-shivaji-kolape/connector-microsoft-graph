@@ -218,8 +218,9 @@ def get_group_users(config, params):
 
 def get_security_alert(config, params):
     microsoft_graph = SetupSession(config)
-    graph_api_endpoint = '{0}/{1}'.format(microsoft_graph.ms.host, config.get('api_version'))
-    url = graph_api_endpoint + '/security/alerts/{0}'.format(params.get('alert_id'))
+    api_version = params.pop('api_version', 'V1')
+    alert_endpoint = get_alert_endpoint(microsoft_graph, config, api_version)
+    url = alert_endpoint + '/{0}'.format(params.get('alert_id'))
     logger.info("THIS IS THE URL: " + url)
     response = microsoft_graph.session.get(url=url)
     microsoft_graph.session.close()
@@ -231,16 +232,26 @@ def get_security_alert(config, params):
                                                                                str(response.reason)))
 
 
-def get_all_security_alerts(config, params):
-    microsoft_graph = SetupSession(config)
+def get_alert_endpoint(microsoft_graph, config, api_version):
     graph_api_endpoint = '{0}/{1}'.format(microsoft_graph.ms.host, config.get('api_version'))
-    url = graph_api_endpoint + '/security/alerts'
+    if api_version.lower() == 'v2':
+        alert_endpoint = graph_api_endpoint + '/security/alerts_v2'
+    else:
+        alert_endpoint = graph_api_endpoint + '/security/alerts'
+    return alert_endpoint
+
+
+def get_filter_query_string(params):
     all_filters = []
-    for p_name, parameter in params.items():
+    params['classification'] = CLASSIFICATION.get(params.get('classification'))
+    params['status'] = STATUS.get(params.get('status'))
+    params['determination'] = STATUS.get(params.get('determination'))
+    params['severity'] = STATUS.get(params.get('severity'))
+    for key, parameter in params.items():
         if not parameter:
             continue
-        parameter_key = alerts_filter_map[p_name]
-        if p_name == 'search_from':
+        parameter_key = alerts_filter_map.get(key)
+        if key in ['search_from', 'lastUpdateDateTime', 'createdDateTime']:
             param_filter = f"{parameter_key} gt {parameter}"
         else:
             param_filter = f"{parameter_key} eq '{parameter}'"
@@ -248,7 +259,15 @@ def get_all_security_alerts(config, params):
     if all_filters:
         all_filters = ['(' + filter_str + ')' for filter_str in all_filters]
         all_filters = ' and '.join(all_filters)
-        url = f'{url}?$filter={all_filters}'
+    return all_filters
+
+
+def get_all_security_alerts(config, params):
+    microsoft_graph = SetupSession(config)
+    api_version = params.pop('api_version', 'V1')
+    url = get_alert_endpoint(microsoft_graph, config, api_version)
+    query_string = get_filter_query_string(params)
+    url = f'{url}?$filter={query_string}'
     response = microsoft_graph.session.get(url=url)
     microsoft_graph.session.close()
     if response.ok:
@@ -259,28 +278,44 @@ def get_all_security_alerts(config, params):
                                                                                str(response.reason)))
 
 
-def update_security_alert(config, params):
-    microsoft_graph = SetupSession(config)
-    graph_api_endpoint = '{0}/{1}'.format(microsoft_graph.ms.host, config.get('api_version'))
-    url = graph_api_endpoint + '/security/alerts/{0}'.format(params.get('alert_id'))
+def get_alert_payload(params):
     alert_tags = str(params.get('tags', ''))
     if alert_tags:
         alert_tags = list(alert_tags.split(","))
+    api_version = params.get('api_version', 'V1')
     payload = {
         'assignedTo': params.get('assigned_to'),
-        'comments': params.get('comments'),
         'status': STATUS.get(params.get('status'), ''),
-        'feedback': FEEDBACK.get(params.get('feedback'), ''),
-        'tags': alert_tags,
-        'vendorInformation': {
-            'provider': params.get('provider'),
-            'vendor': params.get('vendor'),
-            'subProvider': params.get('subProvider'),
-            'providerVersion': params.get('providerVersion')
-        }
     }
+    if api_version.lower() == 'v2':
+        payload.update({
+            "classification": CLASSIFICATION.get(params.get('classification')),
+            "determination": DETERMINATION.get(params.get('determination'))
+        })
+    else:
+        payload.update({
+            'comments': params.get('comments'),
+            'feedback': FEEDBACK.get(params.get('feedback'), ''),
+            'tags': alert_tags,
+            'vendorInformation': {
+                'provider': params.get('provider'),
+                'vendor': params.get('vendor'),
+                'subProvider': params.get('subProvider'),
+                'providerVersion': params.get('providerVersion')
+            }
+        })
     payload = check_payload(payload)
-    response = microsoft_graph.session.patch(url=url, json=payload)
+    return payload
+
+
+def update_security_alert(config, params):
+    microsoft_graph = SetupSession(config)
+    api_version = params.get('api_version', 'V1')
+    url = get_alert_endpoint(microsoft_graph, config, api_version)
+    alert_id = params.get('alert_id')
+    alert_endpoint = f'{url}/{alert_id}'
+    payload = get_alert_payload(params)
+    response = microsoft_graph.session.patch(url=alert_endpoint, json=payload)
     microsoft_graph.session.close()
     if response.ok:
         return response.json()

@@ -10,7 +10,14 @@ alerts_filter_map = {
     "vendor": "vendorInformation/vendor",
     "provider": "vendorInformation/provider",
     "severity": "severity",
-    "search_from": "eventDateTime"
+    "search_from": "eventDateTime",
+    "assignedTo": "assignedTo",
+    "classification": "classification",
+    "determination": "determination",
+    "status": "status",
+    "createdDateTime": "createdDateTime",
+    "lastUpdateDateTime": "lastUpdateDateTime",
+    "serviceSource": "serviceSource"
 }
 FEEDBACK = {
     "Unknown": "unknown",
@@ -19,13 +26,47 @@ FEEDBACK = {
     "Benign Positive": "benignPositive"
 }
 
+SEVERITY = {
+    "Unknown": "unknown",
+    "Informational": "informational",
+    "low": "low",
+    "Medium": "medium",
+    "High": "high",
+    "Unknown Future Value": "unknownFutureValue"
+
+}
 STATUS = {
     "Unknown": "unknown",
+    "Unknown Future Value": "unknownFutureValue",
     "New Alert": "newAlert",
     "In Progress": "inProgress",
     "Resolved": "resolved"
 }
-
+CLASSIFICATION = {
+    "Unknown": "unknown",
+    "False Positive": "falsePositive",
+    "True Positive": "truePositive",
+    "Informational Expected Activity": "informationalExpectedActivity",
+    "Unknown Future Value": "unknownFutureValue"
+}
+DETERMINATION = {
+    "Unknown": "unknown",
+    "ATP": "apt",
+    "Malware": "malware",
+    "Security Personnel": "securityPersonnel",
+    "Security Testing": "securityTesting",
+    "Unwanted Software": "unwantedSoftware",
+    "Other": "other",
+    "MultiStaged Attack": "multiStagedAttack",
+    "Compromised User": "compromisedUser",
+    "Phishing": "phishing",
+    "Malicious User Activity": "maliciousUserActivity",
+    "Clean": "clean",
+    "Insufficient Data": "insufficientData",
+    "Confirmed User Activity": "confirmedUserActivity",
+    "Line Of Business Application": "lineOfBusinessApplication",
+    "Unknown Future Value": "unknownFutureValue"
+}
 IPv4 = "#microsoft.graph.iPv4CidrRange"
 IPv6 = "#microsoft.graph.iPv6CidrRange"
 FIELDS = {
