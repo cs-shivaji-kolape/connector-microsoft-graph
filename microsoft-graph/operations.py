@@ -4,13 +4,16 @@ MIT License
 Copyright (c) 2024 Fortinet Inc
 Copyright end
 """
+import threading
 from queue import Queue
 from threading import Thread
-import threading
+
 import requests
+from connectors.core.connector import get_logger, ConnectorError
+
 from .microsoft_api_auth import *
 from .utils import _list
-from connectors.core.connector import get_logger, ConnectorError
+
 logger = get_logger('microsoft_graph')
 
 
@@ -325,6 +328,25 @@ def update_security_alert(config, params):
                                                                                str(response.reason)))
 
 
+def add_comment_on_security_alert(config, params):
+    microsoft_graph = SetupSession(config)
+    alert_id = params.get('alert_id')
+    endpoint = '{0}/{1}/security/alerts_v2/{2}/comments'.format(microsoft_graph.ms.host, config.get('api_version'),
+                                                                alert_id)
+    payload = {
+        "@odata.type": "microsoft.graph.security.alertComment",
+        "comment": params.get('comment')
+    }
+    response = microsoft_graph.session.post(url=endpoint, json=payload)
+    microsoft_graph.session.close()
+    if response.ok:
+        return response.json()
+    else:
+        raise ConnectorError(
+            'Fail To request API {0} response is :{1} with reason: {2}'.format(str(endpoint), str(response.content),
+                                                                               str(response.reason)))
+
+
 def search_message(config, params):
     thread_create = ThreadCreate(config)
     graph_api_endpoint = '{0}/{1}'.format(RESOURCE, config.get('api_version'))
@@ -443,7 +465,8 @@ def block_or_unblock_new_ips(config, params, operation='block_new_ips'):
                     ipranges_graph_content.append(NewIPAddress)
         else:
             ips_to_unblock = ipv4_ips + ipv6_ips
-            ipranges_graph_content[:] = [entry for entry in ipranges_graph_content if entry.get('cidrAddress') not in ips_to_unblock]
+            ipranges_graph_content[:] = [entry for entry in ipranges_graph_content if
+                                         entry.get('cidrAddress') not in ips_to_unblock]
         newData = {
             "@odata.type": "#microsoft.graph.ipNamedLocation",
             "ipRanges": ipranges_graph_content
@@ -548,6 +571,7 @@ operations = {
     'get_security_alert': get_security_alert,
     'get_all_security_alerts': get_all_security_alerts,
     'update_security_alert': update_security_alert,
+    'add_comment_on_security_alert': add_comment_on_security_alert,
     'get_group_users': get_group_users,
     'search_message': search_message,
     'del_message_bulk': del_message_bulk,
