@@ -11,7 +11,7 @@ alerts_filter_map = {
     "provider": "vendorInformation/provider",
     "severity": "severity",
     "search_from": "eventDateTime",
-    "assignedTo": "assignedTo",
+    "assigned_to": "assignedTo",
     "classification": "classification",
     "determination": "determination",
     "status": "status",
