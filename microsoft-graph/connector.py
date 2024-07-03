@@ -8,7 +8,7 @@ Copyright end
 from connectors.core.connector import Connector, get_logger, ConnectorError
 from .operations import operations, _check_health, API_VERSION, AUTH_BEHALF_OF_USER
 from connectors.core.utils import update_connnector_config
-logger = get_logger('microsoft_graph')
+logger = get_logger('microsoft-graph')
 
 
 class MicrosoftGraph(Connector):

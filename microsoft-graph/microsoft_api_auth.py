@@ -14,7 +14,7 @@ from connectors.core.utils import update_connnector_config
 from .constants import *
 from integrations.crudhub import make_request
 
-logger = get_logger('microsoft_graph')
+logger = get_logger('microsoft-graph')
 
 
 class MicrosoftAuth:

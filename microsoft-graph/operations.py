@@ -14,7 +14,7 @@ from connectors.core.connector import get_logger, ConnectorError
 from .microsoft_api_auth import *
 from .utils import _list
 
-logger = get_logger('microsoft_graph')
+logger = get_logger('microsoft-graph')
 
 
 class SetupSession(object):
