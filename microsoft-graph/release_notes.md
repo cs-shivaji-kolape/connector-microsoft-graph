@@ -4,7 +4,7 @@
      - Get All Security Alerts
      - Get Security Alert
      - Update Security Alert
-  - Added new parameters `Classification`, `Determination`, `Status`, `Created Date`, `Last Update Date`, `Severity`, and `Service Source` to the `Get All Security Alerts` action based on the selected V2 API Version options.
+  - Added new parameters `Classification`, `Determination`, `Status`, `Created Date`, `Last Update Date`, `Severity`, `Service Source`, `Limit` and `Offset` to the `Get All Security Alerts` action based on the selected V2 API Version options.
   - Added new parameters `Classification`, `Determination`, `Status`,  to the `Update Security Alert` action based on the selected V2 API Version options.
 
 - Added the following new actions and playbooks

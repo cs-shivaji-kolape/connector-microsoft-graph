@@ -269,9 +269,17 @@ def get_all_security_alerts(config, params):
     microsoft_graph = SetupSession(config)
     api_version = params.pop('api_version', 'V1')
     url = get_alert_endpoint(microsoft_graph, config, api_version)
+    top = params.pop('top', '')
+    skip = params.pop('skip', '')
     query_string = get_filter_query_string(params)
-    url = f'{url}?$filter={query_string}'
-    response = microsoft_graph.session.get(url=url)
+    params = {
+        '$top': top,
+        '$skip': skip
+    }
+    if query_string:
+        params['$filter'] = query_string
+    params = {k: v for k, v in params.items() if v is not None and v != ''}
+    response = microsoft_graph.session.get(url=url, params=params)
     microsoft_graph.session.close()
     if response.ok:
         return response.json()

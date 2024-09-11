@@ -454,6 +454,26 @@
           "type": "text",
           "tooltip": "Specify the name of the analyst to filter alerts assigned to that specific analyst.",
           "name": "assigned_to"
+        },
+        {
+          "title": "Limit",
+          "description": "(Optional) pecify the maximum number of records retrieved in the response. The maximum limit is 2000.",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "integer",
+          "tooltip": "Specify the maximum number of records retrieved in the response. The maximum limit is 2000.",
+          "name": "top"
+        },
+        {
+          "title": "Offset",
+          "description": "(Optional) Skips the specified number of records in the result set.",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "integer",
+          "tooltip": "Skips the specified number of records in the result set.",
+          "name": "skip"
         }
       ],
       "output_schema": {
@@ -609,7 +629,7 @@
     },
     {
       "title": "Update Security Alert",
-      "description": "Updates a specific alert using Microsoft Graph API based on the alert ID, vendor name, provider name, and other input parameters you have specified.",
+      "description": "Updates a specific alert using Microsoft Graph API based on the input parameters you have specified.",
       "operation": "update_security_alert",
       "category": "investigation",
       "annotation": "update_security_alert",
