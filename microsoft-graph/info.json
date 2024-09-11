@@ -1,7 +1,7 @@
 {
   "name": "microsoft-graph",
   "label": "Microsoft Graph API",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "description": "Microsoft Graph API is a powerful and unified programming interface provided by Microsoft that allows developers to access a wide range of data and services from Microsoft 365 and Azure Active Directory (Azure AD). It provides a single endpoint and a consistent set of RESTful web APIs, making it easier for developers to integrate and interact with Microsoft's cloud services and applications.",
   "publisher": "Fortinet",
   "cs_approved": true,
@@ -9,7 +9,7 @@
   "category": "Utilities",
   "icon_small_name": "small.png",
   "icon_large_name": "large.png",
-  "help_online": "https://docs.fortinet.com/document/fortisoar/2.1.0/microsoft-graph-api/825/microsoft-graph-api-v2-1-0",
+  "help_online": "",
   "ingestion_supported": false,
   "configuration": {
     "fields": [
