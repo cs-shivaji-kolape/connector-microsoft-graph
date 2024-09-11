@@ -1,0 +1,143 @@
+{
+    "config": [
+        {
+            "auth_type": "Without a User - Application Permission",
+            "resource": "https://graph.microsoft.com",
+            "tenant": "",
+            "client_id": "",
+            "client_secret": "",
+            "api_version": "v1.0",
+            "verify_ssl": false,
+            "config_id": "",
+            "connector_info": {
+                "connector_name": "microsoft-graph",
+                "connector_version": "2.2.0"
+            }
+        }
+    ],
+    "get_risky_users_list": [
+        {}
+    ],
+    "get_risky_user_details": [
+        {
+            "risk_id": "Required_text"
+        }
+    ],
+    "get_all_security_alerts": [
+        {
+            "api_version": "V1",
+            "vendor": null,
+            "provider": null,
+            "severity": "Unknown",
+            "search_from": "2024-09-11T09:04:30.018Z",
+            "assigned_to": null,
+            "top": null,
+            "skip": null
+        }
+    ],
+    "get_security_alert": [
+        {
+            "api_version": "V2",
+            "alert_id": "dc2516906061027057205_5f8c02ab-3981-41a1-b73b-f1fed42dd56f"
+        }
+    ],
+    "update_security_alert": [
+        {
+            "alert_id": "dc2516906061027057205_5f8c02ab-3981-41a1-b73b-f1fed42dd56f",
+            "api_version": "V2",
+            "provider": "Required_text",
+            "vendor": "Required_text",
+            "feedback": "Unknown",
+            "comments": [
+                "Closed by user"
+            ],
+            "tags": null,
+            "providerVersion": null,
+            "subProvider": null,
+            "status": "Unknown",
+            "assigned_to": null
+        }
+    ],
+    "add_comment_on_security_alert": [
+        {
+            "alert_id": "dc2516906061027057205_5f8c02ab-3981-41a1-b73b-f1fed42dd56f",
+            "comment": "Add comment using pytest"
+        }
+    ],
+    "get_groups": [
+        {}
+    ],
+    "get_group_users": [
+        {
+            "group_id": "074d50c7-6304-4632-9e54-b2ee832b9e69"
+        }
+    ],
+    "search_message": [
+        {
+            "subject": "Test Mail",
+            "user_list": "d6322b0c-decc-4a71-8a1c-500cc06ed296",
+            "size": null,
+            "skip": null
+        }
+    ],
+    "del_message": [
+        {
+            "user_id": "d6322b0c-decc-4a71-8a1c-500cc06ed296",
+            "message_id": "Required_text"
+        }
+    ],
+    "del_message_bulk": [
+        {
+            "user_list": "d6322b0c-decc-4a71-8a1c-500cc06ed296"
+        }
+    ],
+    "revoke_user_sessions": [
+        {
+            "user": "Admin"
+        }
+    ],
+    "get_all_named_locations": [
+        {
+            "name": null,
+            "select": [
+                "ID",
+                "Display Name"
+            ],
+            "order_by": "ID",
+            "order": "Ascending",
+            "count": false,
+            "size": null,
+            "skip": null
+        }
+    ],
+    "block_new_ips": [
+        {
+            "namedLocationUuid": "d6322b0c-decc-4a71-8a1c-500cc06ed296",
+            "ipv4_ips": null,
+            "ipv6_ips": null
+        }
+    ],
+    "unblock_new_ips": [
+        {
+            "namedLocationUuid": "d6322b0c-decc-4a71-8a1c-500cc06ed296",
+            "ipv4_ips": null,
+            "ipv6_ips": null
+        }
+    ],
+    "create_ip_range_location": [
+        {
+            "name": "Test",
+            "is_trusted": false,
+            "ipv4_ips": null,
+            "ipv6_ips": null
+        }
+    ],
+    "invalid_params": {
+        "text": "1234567890!@#$%^&*()_+qwertyuioplkjhgfdsazxcvbnm",
+        "password": "*******",
+        "integer": -123,
+        "json": {
+            "key": "value"
+        }
+    }
+}

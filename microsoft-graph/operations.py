@@ -588,5 +588,6 @@ operations = {
     'create_ip_range_location': create_ip_range_location,
     'block_new_ips': block_new_ips,
     'unblock_new_ips': unblock_new_ips,
-    'get_all_named_locations': get_all_named_locations
+    'get_all_named_locations': get_all_named_locations,
+    'check_health': _check_health
 }
