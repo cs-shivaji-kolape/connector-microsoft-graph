@@ -563,10 +563,8 @@
                     "mdeDeviceId": "",
                     "rbacGroupId": "",
                     "healthStatus": "",
-                    "ipInterfaces": [
-                    ],
-                    "detailedRoles": [
-                    ],
+                    "ipInterfaces": [],
+                    "detailedRoles": [],
                     "deviceDnsName": "",
                     "lastIpAddress": "",
                     "loggedOnUsers": [],
@@ -598,8 +596,7 @@
                 "incidentWebUrl": "",
                 "createdDateTime": "",
                 "detectionSource": "",
-                "mitreTechniques": [
-                ],
+                "mitreTechniques": [],
                 "providerAlertId": "",
                 "actorDisplayName": "",
                 "resolvedDateTime": "",
@@ -1142,7 +1139,6 @@
           }
         }
       ],
-      "output_schema":,
       "enabled": true
     },
     {
