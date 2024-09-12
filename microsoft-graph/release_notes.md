@@ -1,6 +1,6 @@
 #### What's Improved
-- Security alert-related actions now support API versions V1 and V2. 
-  - Added a new parameter `API Version` with support options V1 and V2 to the following actions
+- Security alert-related actions now support API versions V1 and V2.
+  - Added a new `API Version` parameter with support for options V1 and V2, and added conditional output schema support based on this parameter to the following actions
      - Get All Security Alerts
      - Get Security Alert
      - Update Security Alert
