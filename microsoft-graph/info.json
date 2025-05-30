@@ -9,7 +9,7 @@
   "category": "Utilities",
   "icon_small_name": "small.png",
   "icon_large_name": "large.png",
-  "help_online": "",
+  "help_online": "https://docs.fortinet.com/document/fortisoar/2.2.0/microsoft-graph-api/1080/microsoft-graph-api-v2-2-0",
   "ingestion_supported": false,
   "configuration": {
     "fields": [
@@ -207,7 +207,7 @@
       "operation": "get_risky_users_list",
       "category": "investigation",
       "annotation": "get_risky_users_list",
-      "description": "Retrieves a list of all risky users from Microsoft Graph API.",
+      "description": "Retrieves a list of all risky users from the Microsoft Graph API.",
       "parameters": [],
       "output_schema": {
         "@odata.context": "",
@@ -232,12 +232,12 @@
       "operation": "get_risky_user_details",
       "category": "investigation",
       "annotation": "get_risky_user_details",
-      "description": "Retrieve details for a specific risky user from Microsoft Graph API based on the user ID you have specified.",
+      "description": "Retrieve details for a specific risky user from the Microsoft Graph API based on the user ID you have specified.",
       "parameters": [
         {
           "title": "Risky User ID",
-          "description": "Specify the ID of the risky user whose details you want to retrieve from Microsoft Graph API.",
-          "tooltip": "Specify the ID of the risky user whose details you want to retrieve from Microsoft Graph API.",
+          "description": "Specify the ID of the risky user whose details you want to retrieve from the Microsoft Graph API.",
+          "tooltip": "Specify the ID of the risky user whose details you want to retrieve from the Microsoft Graph API.",
           "required": true,
           "editable": true,
           "visible": true,
@@ -261,7 +261,7 @@
     },
     {
       "title": "Get All Security Alerts",
-      "description": "Retrieves a list of alerts from Microsoft Graph API based on the input parameters you have specified.",
+      "description": "Retrieves a list of alerts from the Microsoft Graph API based on the input parameters you have specified.",
       "operation": "get_all_security_alerts",
       "category": "investigation",
       "annotation": "get_all_security_alerts",
@@ -270,8 +270,8 @@
           "title": "API Version",
           "type": "select",
           "name": "api_version",
-          "description": "Select the version of the API. If the user selects V2, it provides comprehensive information and detailed context about alerts, where as V1 refers to the older version of the alerts API. By default, V1 is selected.",
-          "tooltip": "Select the version of the API. If the user selects V2, it provides comprehensive information and detailed context about alerts, where as V1 refers to the older version of the alerts API. By default, V1 is selected.",
+          "description": "Select the version of the API you want to use for retrieving security alerts. If the user selects V2, it provides comprehensive information and detailed context about alerts, whereas V1 refers to the older version of the alerts API. By default,V1 is selected.",
+          "tooltip": "Select the version of the API you want to use for retrieving security alerts. If the user selects V2, it provides comprehensive information and detailed context about alerts, whereas V1 refers to the older version of the alerts API. By default,V1 is selected.",
           "required": false,
           "editable": true,
           "visible": true,
@@ -284,30 +284,30 @@
             "V1": [
               {
                 "title": "Vendor",
-                "description": "Specify the name of the product vendor that provided the alert you want to retrieve using Microsoft Graph API. For example, Microsoft",
+                "description": "Specify the name of the product vendor that provided the alert you want to retrieve using the Microsoft Graph API. For example, Microsoft.",
                 "required": false,
                 "editable": true,
                 "visible": true,
                 "type": "text",
                 "name": "vendor",
-                "tooltip": "Specify the name of the vendor for the product that provided the alert you want to retrieve using Microsoft Graph API.",
+                "tooltip": "Specify the name of the product vendor that provided the alert you want to retrieve using the Microsoft Graph API. For example, Microsoft.",
                 "placeholder": "e.g Microsoft"
               },
               {
                 "title": "Provider",
-                "description": "Specify the security product that provided the alert you want to retrieve using Microsoft Graph API. For example, Cloud Application Security",
+                "description": "Specify the security product that provided the alert you want to retrieve using the Microsoft Graph API. For example, Cloud Application Security.",
                 "required": false,
                 "editable": true,
                 "visible": true,
                 "type": "text",
                 "name": "provider",
-                "tooltip": "Specify the security product that provided the alert you want to retrieve using Microsoft Graph API. For example, Cloud Application Security.",
+                "tooltip": "Specify the security product that provided the alert you want to retrieve using the Microsoft Graph API. For example, Cloud Application Security.",
                 "placeholder": "e.g Cloud Application Security"
               },
               {
                 "title": "Severity",
-                "description": "Select the alert severity, set by the vendor or provider, to retrieve alerts using Microsoft Graph API. You can choose from the following options: Unknown Low Medium High Informational",
-                "tooltip": "Select the alert severity, which is set by the vendor or provider based on which you want to retrieve alerts using Microsoft Graph API",
+                "description": "Select the alert severity, set by the vendor or provider, to retrieve alerts using the Microsoft Graph API. You can choose from the following options:  Unknown, Low, Medium, High, Informational.",
+                "tooltip": "Select the alert severity, set by the vendor or provider, to retrieve alerts using the Microsoft Graph API. You can choose from the following options:  Unknown, Low, Medium, High, Informational.",
                 "required": false,
                 "editable": true,
                 "visible": true,
@@ -323,8 +323,8 @@
               },
               {
                 "title": "Search From",
-                "description": "Select the date and time of alert triggering event(s) to retrieve using Microsoft Graph API.",
-                "tooltip": "Select the DateTime at which the event(s) that served as the trigger(s) to generate the alert you want to retrieve using Microsoft Graph API.",
+                "description": "Select the date and time of alert triggering event(s) to retrieve using the Microsoft Graph API.",
+                "tooltip": "Select the date and time of alert triggering event(s) to retrieve using the Microsoft Graph API.",
                 "required": false,
                 "editable": true,
                 "visible": true,
@@ -337,11 +337,11 @@
                 "title": "Classification",
                 "name": "classification",
                 "type": "select",
-                "description": "Select the classification to filter alerts based on the selected classification. Possible values are: Unknown, False Positive, True Positive, Informational Expected Activity, Unknown Future Value",
+                "description": "Select the classification based on which you want to filter alerts to be retrieved. You can choose from the following options: Unknown, False Positive, True Positive, Informational Expected Activity, or Unknown Future Value.",
                 "required": false,
                 "editable": true,
                 "visible": true,
-                "tooltip": "Select the classification to filter alerts based on the selected classification. Possible values are: Unknown, False Positive, True Positive, Informational Expected Activity, Unknown Future Value",
+                "tooltip": "Select the classification based on which you want to filter alerts to be retrieved. You can choose from the following options: Unknown, False Positive, True Positive, Informational Expected Activity, or Unknown Future Value.",
                 "options": [
                   "Unknown",
                   "False Positive",
@@ -353,12 +353,12 @@
               {
                 "title": "Determination",
                 "name": "determination",
-                "description": "Select the determination to filter alerts based on the Selected determination. Possible values are: Unknown, ATP, Malware, Security Personnel, Security Testing, Unwanted Software, Other, MultiStaged Attack, Compromised User, Phishing, Malicious User Activity, Clean, Insufficient Data, Confirmed User Activity, lLne Of Business Application, Unknown Future Value",
+                "description": "Select the determination based on which you want to filter alerts to be retrieved. You can choose from the following options: Unknown, ATP, Malware, Security Personnel, Security Testing, Unwanted Software, Other, MultiStaged Attack, Compromised User, Phishing, Malicious User Activity, Clean, Insufficient Data, Confirmed User Activity, Line of Business Application, or Unknown Future Value.",
                 "required": false,
                 "editable": true,
                 "visible": true,
                 "type": "select",
-                "tooltip": "Select the determination to filter alerts based on the Selected determination. Possible values are: Unknown, ATP, Malware, Security Personnel, Security Testing, Unwanted Software, Other, MultiStaged Attack, Compromised User, Phishing, Malicious User Activity, Clean, Insufficient Data, Confirmed User Activity, lLne Of Business Application, Unknown Future Value",
+                "tooltip": "Select the determination based on which you want to filter alerts to be retrieved. You can choose from the following options: Unknown, ATP, Malware, Security Personnel, Security Testing, Unwanted Software, Other, MultiStaged Attack, Compromised User, Phishing, Malicious User Activity, Clean, Insufficient Data, Confirmed User Activity, Line of Business Application, or Unknown Future Value.",
                 "options": [
                   "Unknown",
                   "ATP",
@@ -380,12 +380,12 @@
               },
               {
                 "title": "Status",
-                "description": "(Optional) Select the status to filter alerts based on the Selected status. You can choose from the following options: Unknown, New Alert, In Progress, or Resolved.",
+                "description": "Select the status based on which you want to filter alerts to be retrieved. You can choose from the following options: Unknown, New Alert, In Progress, or Resolved.",
                 "required": false,
                 "editable": true,
                 "visible": true,
                 "type": "select",
-                "tooltip": "Select the status to filter alerts based on the Selected status.",
+                "tooltip": "Select the status based on which you want to filter alerts to be retrieved. You can choose from the following options: Unknown, New Alert, In Progress, or Resolved.",
                 "options": [
                   "Unknown Future Value",
                   "New Alert",
@@ -398,8 +398,8 @@
                 "title": "Created Date",
                 "name": "createdDateTime",
                 "type": "datetime",
-                "description": "(Optional) Specify the creation date to filter alerts created after the specified date.",
-                "tooltip": "Specify the creation date to filter alerts created after the specified date.",
+                "description": "(Optional) Specify the creation date to filter alerts so that alerts created after the specified date are retrieved.",
+                "tooltip": "Specify the creation date to filter alerts so that alerts created after the specified date are retrieved.",
                 "required": false,
                 "editable": true,
                 "visible": true
@@ -408,8 +408,8 @@
                 "title": "Last Update Date",
                 "name": "lastUpdateDateTime",
                 "type": "datetime",
-                "description": "(Optional) Specify the modified date to filter alerts modified after the specified.",
-                "tooltip": "Specify the modified date to filter alerts modified after the specified.",
+                "description": "(Optional) Specify the last modified date to filter alerts so that alerts modified after the specified date are retrieved.",
+                "tooltip": "Specify the last modified date to filter alerts so that alerts modified after the specified date are retrieved.",
                 "required": false,
                 "editable": true,
                 "visible": true
@@ -418,8 +418,8 @@
                 "title": "Severity",
                 "name": "severity",
                 "type": "select",
-                "description": "(Optional) Specify the severity of the alert to filter alerts based on the specified severity.",
-                "tooltip": "Specify the severity of the alert to filter alerts based on the specified severity.",
+                "description": "(Optional) Select the severity based on which you want to filter alerts to be retrieved. You can choose from the following options: Unknown, Informational, Low, Medium, High, or Unknown Future Value.",
+                "tooltip": "Select the severity based on which you want to filter alerts to be retrieved. You can choose from the following options: Unknown, Informational, Low, Medium, High, or Unknown Future Value.",
                 "required": false,
                 "editable": true,
                 "visible": true,
@@ -436,8 +436,8 @@
                 "title": "Service Source",
                 "name": "serviceSource",
                 "type": "text",
-                "description": "(Optional) Specify the service source of the alert to filter alerts based on the specified service source.",
-                "tooltip": "Specify the service source of the alert to filter alerts based on the specified service source.",
+                "description": "(Optional) Specify the service source based on which you want to filter alerts to be retrieved.",
+                "tooltip": "Specify the service source based on which you want to filter alerts to be retrieved.",
                 "required": false,
                 "editable": true,
                 "visible": true
@@ -447,32 +447,32 @@
         },
         {
           "title": "Assigned To",
-          "description": "(Optional) Specify the name of the analyst to filter alerts assigned to that specific analyst.",
+          "description": "(Optional) Specify the name of the analyst to filter alerts so that only those alerts assigned to the specified analyst are retrieved.",
           "required": false,
           "editable": true,
           "visible": true,
           "type": "text",
-          "tooltip": "Specify the name of the analyst to filter alerts assigned to that specific analyst.",
+          "tooltip": "Specify the name of the analyst to filter alerts so that only those alerts assigned to the specified analyst are retrieved.",
           "name": "assigned_to"
         },
         {
           "title": "Limit",
-          "description": "(Optional) Specify the maximum number of records retrieved in the response. The maximum limit is 2000.",
+          "description": "(Optional) Specify the maximum number of records retrieved in the response. The maximum limit is '2000'.",
           "required": false,
           "editable": true,
           "visible": true,
           "type": "integer",
-          "tooltip": "Specify the maximum number of records retrieved in the response. The maximum limit is 2000.",
+          "tooltip": "Specify the maximum number of records retrieved in the response. The maximum limit is '2000'.",
           "name": "top"
         },
         {
           "title": "Offset",
-          "description": "(Optional) Skips the specified number of records in the result set.",
+          "description": "(Optional) Specify the number of alert records you want to skip in this request.",
           "required": false,
           "editable": true,
           "visible": true,
           "type": "integer",
-          "tooltip": "Skips the specified number of records in the result set.",
+          "tooltip": "Specify the number of alert records you want to skip in this request.",
           "name": "skip"
         }
       ],
@@ -616,7 +616,7 @@
     },
     {
       "title": "Get Security Alert",
-      "description": "Retrieves details of a specific alert from Microsoft Graph API based on the alert ID you have specified.",
+      "description": "Retrieves details of a specific alert from the Microsoft Graph API based on the alert ID you have specified.",
       "operation": "get_security_alert",
       "category": "investigation",
       "annotation": "get_security_alert",
@@ -625,8 +625,8 @@
           "title": "API Version",
           "type": "select",
           "name": "api_version",
-          "description": "Select the version of the API. If the user selects V2, it provides comprehensive information and detailed context about alerts, where as V1 refers to the older version of the alerts API. By default, V1 is selected.",
-          "tooltip": "Select the version of the API. If the user selects V2, it provides comprehensive information and detailed context about alerts, where as V1 refers to the older version of the alerts API. By default, V1 is selected.",
+          "description": "Select the version of the API you want to use for retrieving security alerts. If the user selects V2, it provides comprehensive information and detailed context about alerts, whereas V1 refers to the older version of the alerts API. By default V1 is selected.",
+          "tooltip": "Select the version of the API you want to use for retrieving security alerts. If the user selects V2, it provides comprehensive information and detailed context about alerts, whereas V1 refers to the older version of the alerts API. By default V1 is selected.",
           "required": false,
           "editable": true,
           "visible": true,
@@ -638,8 +638,8 @@
         },
         {
           "title": "Alert ID",
-          "description": "Specify the unique Alert ID to retrieve that alert from Microsoft Graph API. The alert ID is generated by the provider when an alert is created in Azure.",
-          "tooltip": "Specify the unique Alert ID using which you want to retrieve the specific alert from Microsoft Graph API. The alert ID is generated by the provider when an alert is created in Azure.",
+          "description": "Specify the unique Alert ID to retrieve that alert from the Microsoft Graph API. The alert ID is generated by the provider when an alert is created in Azure.",
+          "tooltip": "Specify the unique Alert ID to retrieve that alert from the Microsoft Graph API. The alert ID is generated by the provider when an alert is created in Azure.",
           "required": true,
           "editable": true,
           "visible": true,
@@ -793,15 +793,15 @@
     },
     {
       "title": "Update Security Alert",
-      "description": "Updates a specific alert using Microsoft Graph API based on the input parameters you have specified.",
+      "description": "Updates a specific alert using Microsoft Graph API based on the alert ID, vendor name, provider name, and other input parameters you have specified.",
       "operation": "update_security_alert",
       "category": "investigation",
       "annotation": "update_security_alert",
       "parameters": [
         {
           "title": "Alert ID",
-          "description": "Specify the unique alert ID to update that alert through Microsoft Graph API. The alert ID is generated by the provider when an alert is created in Azure.",
-          "tooltip": "Specify the unique Alert ID using which you want to update the specific alert from Microsoft Graph API.",
+          "description": "Specify the unique alert ID to update that alert through the Microsoft Graph API. The alert ID is generated by the provider when an alert is created in Azure.",
+          "tooltip": "Specify the unique alert ID to update that alert through the Microsoft Graph API. The alert ID is generated by the provider when an alert is created in Azure.",
           "required": true,
           "editable": true,
           "visible": true,
@@ -812,8 +812,8 @@
           "title": "API Version",
           "type": "select",
           "name": "api_version",
-          "description": "Select the version of the API. If the user selects V2, it provides comprehensive information and detailed context about alerts, where as V1 refers to the older version of the alerts API. By default, V1 is selected.",
-          "tooltip": "Select the version of the API. If the user selects V2, it provides comprehensive information and detailed context about alerts, where as V1 refers to the older version of the alerts API. By default, V1 is selected.",
+          "description": "Select the version of the API you want to use for retrieving security alerts. If the user selects V2, it provides comprehensive information and detailed context about alerts, whereas V1 refers to the older version of the alerts API. By default,V1 is selected.",
+          "tooltip": "Select the version of the API you want to use for retrieving security alerts. If the user selects V2, it provides comprehensive information and detailed context about alerts, whereas V1 refers to the older version of the alerts API. By default,V1 is selected.",
           "required": false,
           "editable": true,
           "visible": true,
@@ -826,11 +826,11 @@
             "V1": [
               {
                 "title": "Provider",
-                "description": "Specify the provider of product or service in Azure to update in the specific alert in Azure. For example, WindowsDefenderATP.",
+                "description": "Specify the provider of the product or service in Azure to update the specific alert in Azure. For example, WindowsDefenderATP.",
                 "required": true,
                 "editable": true,
                 "visible": true,
-                "tooltip": "Specify the provider of product or service in Azure that you want to update in the specific alert in Azure. For example, WindowsDefenderATP.",
+                "tooltip": "Specify the provider of the product or service in Azure to update the specific alert in Azure. For example, WindowsDefenderATP.",
                 "type": "text",
                 "name": "provider",
                 "placeholder": "e.g WindowsDefenderATP"
@@ -841,7 +841,7 @@
                 "required": true,
                 "editable": true,
                 "visible": true,
-                "tooltip": "Specify the name of the vendor of the alert that you want to update in the specific alert in Azure. For example, Microsoft.",
+                "tooltip": "Specify the name of the vendor to update in the specific alert in Azure. For example, Microsoft.",
                 "type": "text",
                 "name": "vendor",
                 "placeholder": "e.g Microsoft"
@@ -853,7 +853,7 @@
                 "editable": true,
                 "visible": true,
                 "type": "select",
-                "tooltip": "Select the analyst feedback on the alert that you want to update in the specific alert in Azure.",
+                "tooltip": "Select the analyst feedback on the alert that you want to update in the specific alert in Azure. You can choose from the following options: Unknown, True Positive, False Positive, or Benign Positive.",
                 "options": [
                   "Unknown",
                   "True Positive",
@@ -868,7 +868,7 @@
                 "required": false,
                 "editable": true,
                 "visible": true,
-                "tooltip": "Select the analyst comments that you want to update in the specific alert in Azure.",
+                "tooltip": "Select the analyst comments that you want to update in the specific alert in Azure. You can choose between Closed in MCAS or Closed in IPS. ",
                 "type": "multiselect",
                 "options": [
                   "Closed in MCAS",
@@ -878,12 +878,12 @@
               },
               {
                 "title": "Tags",
-                "description": "(Optional) Specify the JSON array of strings that store user-definable labels that can be applied to the alert that you want to update in Azure. These tags serve as filter conditions, and you can specify multiple tags using comma-based separators.",
+                "description": "(Optional) Specify the JSON array of strings that store user-defined labels that can be applied to the alert that you want to update in Azure. These tags serve as filter conditions, and you can specify multiple tags using comma-based separators.",
                 "required": false,
                 "editable": true,
                 "visible": true,
                 "type": "text",
-                "tooltip": "Specify the JSON array of strings that store user-definable labels that can be applied to the alert that you want to update in Azure. These tags serve as filter conditions, and you can specify multiple tags using comma-based separators.",
+                "tooltip": "(Optional) Specify the JSON array of strings that store user-defined labels that can be applied to the alert that you want to update in Azure. These tags serve as filter conditions, and you can specify multiple tags using comma-based separators.",
                 "name": "tags"
               },
               {
@@ -892,17 +892,17 @@
                 "required": false,
                 "editable": true,
                 "visible": true,
-                "tooltip": "Specify the version of the provider or sub-provider, if it exists, that generated the alert that you want to update in Azure.",
+                "tooltip": "(Optional) Specify the version of the provider or sub-provider, if it exists, that generated the alert that you want to update in Azure.",
                 "type": "text",
                 "name": "providerVersion"
               },
               {
                 "title": "Subprovider",
-                "description": "(Optional) Specify the name of the sub-provider under the aggregating provider in Azure for the alert t that you want to update in Azure. For example, WindowsDefenderATP.SmartScreen",
+                "description": "(Optional) Specify the name of the sub-provider under the aggregating provider in Azure for the alert that you want to update in Azure. For example, WindowsDefenderATP.SmartScreen",
                 "required": false,
                 "editable": true,
                 "visible": true,
-                "tooltip": "Specify the name of the sub-provider under the aggregating provider in Azure for the alert t that you want to update in Azure. For example, WindowsDefenderATP.SmartScreen.",
+                "tooltip": "Specify the name of the sub-provider under the aggregating provider in Azure for the alert that you want to update in Azure. For example, WindowsDefenderATP.SmartScreen",
                 "type": "text",
                 "name": "subProvider",
                 "placeholder": "e.g WindowsDefenderATP.SmartScreen"
@@ -914,7 +914,7 @@
                 "editable": true,
                 "visible": true,
                 "type": "select",
-                "tooltip": "Select the status (life cycle status) that you want to update in the specific alert in Azure.",
+                "tooltip": "Select the status (life cycle status) that you want to update in the specific alert in Azure. You can choose from the following options: Unknown, New Alert, In Progress, or Resolved. ",
                 "options": [
                   "Unknown",
                   "New Alert",
@@ -929,11 +929,11 @@
                 "title": "Classification",
                 "name": "classification",
                 "type": "select",
-                "description": "Specifies the classification of the alert. Possible values are: Unknown, False Positive, True Positive, Informational Expected Activity, Unknown Future Value",
+                "description": "(Optional) Select the classification that you want to update in the specific alert in Azure. You can choose from the following options: Unknown, False Positive, True Positive, Informational Expected Activity, or Unknown Future Value.",
                 "required": false,
                 "editable": true,
                 "visible": true,
-                "tooltip": "Specifies the classification of the alert. Possible values are: Unknown, False Positive, True Positive, Informational Expected Activity, Unknown Future Value",
+                "tooltip": "Select the classification that you want to update in the specific alert in Azure. You can choose from the following options: Unknown, False Positive, True Positive, Informational Expected Activity, or Unknown Future Value.",
                 "options": [
                   "Unknown",
                   "False Positive",
@@ -945,12 +945,12 @@
               {
                 "title": "Determination",
                 "name": "determination",
-                "description": "Specifies the determination of the alert. Possible values are: Unknown, ATP, Malware, Security Personnel, Security Testing, Unwanted Software, Other, MultiStaged Attack, Compromised User, Phishing, Malicious User Activity, Clean, Insufficient Data, Confirmed User Activity, lLne Of Business Application, Unknown Future Value",
+                "description": "(Optional) Select the determination that you want to update in the specific alert in Azure. You can choose from the following options: Unknown, ATP, Malware, Security Personnel, Security Testing, Unwanted Software, Other, MultiStaged Attack, Compromised User, Phishing, Malicious User Activity, Clean, Insufficient Data, Confirmed User Activity, Line of Business Application, or Unknown Future Value.",
                 "required": false,
                 "editable": true,
                 "visible": true,
                 "type": "select",
-                "tooltip": "Specifies the determination of the alert. Possible values are: Unknown, ATP, Malware, Security Personnel, Security Testing, Unwanted Software, Other, MultiStaged Attack, Compromised User, Phishing, Malicious User Activity, Clean, Insufficient Data, Confirmed User Activity, lLne Of Business Application, Unknown Future Value",
+                "tooltip": "Select the determination that you want to update in the specific alert in Azure. You can choose from the following options: Unknown, ATP, Malware, Security Personnel, Security Testing, Unwanted Software, Other, MultiStaged Attack, Compromised User, Phishing, Malicious User Activity, Clean, Insufficient Data, Confirmed User Activity, Line of Business Application, or Unknown Future Value.",
                 "options": [
                   "Unknown",
                   "ATP",
@@ -977,7 +977,7 @@
                 "editable": true,
                 "visible": true,
                 "type": "select",
-                "tooltip": "Select the status (life cycle status) that you want to update in the specific alert in Azure.",
+                "tooltip": "Select the status (life cycle status) that you want to update in the specific alert in Azure. You can choose from the following options: Unknown, New Alert, In Progress, or Resolved.",
                 "options": [
                   "Unknown Future Value",
                   "New Alert",
@@ -996,7 +996,7 @@
           "editable": true,
           "visible": true,
           "type": "text",
-          "tooltip": "Specify the name of the analyst to whom you want to assign the specific alert that you want to update for triage, investigation, or remediation in Azure.",
+          "tooltip": "Specify the name of the analyst to whom you want to assign the specific alert that you want to update for triage, investigation, or remediation in Azure. ",
           "name": "assigned_to"
         }
       ],
@@ -1143,15 +1143,15 @@
     },
     {
       "title": "Add Comment on Security Alert",
-      "description": "Add a comment for an existing alert based on the specified alert ID.",
+      "description": "Adds a comment to an existing alert based on the specified alert ID.",
       "operation": "add_comment_on_security_alert",
       "category": "investigation",
       "annotation": "add_comment_on_security_alert",
       "parameters": [
         {
           "title": "Alert ID",
-          "description": "Specify the unique Alert ID to retrieve that alert from Microsoft Graph API. The alert ID is generated by the provider when an alert is created in Azure.",
-          "tooltip": "Specify the unique Alert ID using which you want to retrieve the specific alert from Microsoft Graph API. The alert ID is generated by the provider when an alert is created in Azure.",
+          "description": "Specify the unique Alert ID to which you want to add the comment. The alert ID is generated by the provider when an alert is created in Azure.",
+          "tooltip": "Specify the unique Alert ID to which you want to add the comment. The alert ID is generated by the provider when an alert is created in Azure.",
           "required": true,
           "editable": true,
           "visible": true,
@@ -1160,8 +1160,8 @@
         },
         {
           "title": "Comment",
-          "description": "Specify the comment you want for a specific alert based on alert ID using the Microsoft Graph API.",
-          "tooltip": "Specify the comment you want for a specific alert based on alert ID using the Microsoft Graph API.",
+          "description": "Specify the comment you want to add to the specified alert.",
+          "tooltip": "Specify the comment you want to add to the specified alert.",
           "required": true,
           "editable": true,
           "visible": true,
@@ -1186,7 +1186,7 @@
       "operation": "get_groups",
       "category": "investigation",
       "annotation": "get_groups",
-      "description": "Retrieves a list of groups from Microsoft Graph API.",
+      "description": "Retrieves a list of groups from the Microsoft Graph API.",
       "parameters": [],
       "output_schema": {
         "@odata.context": "",
@@ -1232,15 +1232,15 @@
     },
     {
       "title": "Get Users Within A Group",
-      "description": "Retrieves a list of users within a specific group from Microsoft Graph API based on the group ID you have specified.",
+      "description": "Retrieves a list of users within a specific group from the Microsoft Graph API based on the group ID you have specified.",
       "operation": "get_group_users",
       "annotation": "get_group_users",
       "category": "investigation",
       "parameters": [
         {
           "title": "Group ID",
-          "description": "Specify an ID of the group whose users you want to retrieve from Microsoft Graph. Note: To get the Group ID use the Get Groups operation.",
-          "tooltip": "Specify an ID of the group whose users you want to retrieve from Microsoft Graph. Note: To get the 'Group ID' use the 'Get Groups' operation.",
+          "description": "Specify the ID of the group whose users you want to retrieve from Microsoft Graph. Note: To get the Group ID, use the Get Groups operation.",
+          "tooltip": "Specify the ID of the group whose users you want to retrieve from Microsoft Graph. Note: To get the Group ID, use the Get Groups operation.",
           "required": true,
           "editable": true,
           "visible": true,
@@ -1278,8 +1278,8 @@
       "parameters": [
         {
           "title": "Subject",
-          "description": "Specify a subject based on which you want to search messages in Azure.",
-          "tooltip": "Specify a subject based on which you want to search messages in Azure.",
+          "description": "Specify a subject based on which you want to search for messages in Azure.",
+          "tooltip": "Specify a subject based on which you want to search for messages in Azure.",
           "required": true,
           "editable": true,
           "visible": true,
@@ -1301,8 +1301,8 @@
           "title": "Page Size",
           "type": "integer",
           "name": "size",
-          "tooltip": "Number of messages you want to retrieve per user in this request. Default page size is 10. Page size should be between 1 to 1000",
-          "description": "(Optional) Number of messages you want to retrieve per user in this request. Default page size is 10. Page size should be between 1 to 1000",
+          "tooltip": "(Optional) Number of messages you want to retrieve per user in this request. The default page size is 10. Page size should be between 1 to 1000.",
+          "description": "(Optional) Number of messages you want to retrieve per user in this request. The default page size is 10. Page size should be between 1 to 1000.",
           "required": false,
           "editable": true,
           "visible": true
@@ -1311,7 +1311,7 @@
           "title": "Offset",
           "type": "integer",
           "name": "skip",
-          "tooltip": "Number of messages you want to skip for each user in this request.",
+          "tooltip": "Number of messages you want to skip for each in this request.",
           "description": "(Optional) Number of messages you want to skip for each in this request.",
           "required": false,
           "editable": true,
@@ -1428,21 +1428,21 @@
     },
     {
       "title": "Delete Message Bulk",
-      "description": "Deletes messages from multiple users mailboxes in Azure based on the comma-separated list of users you have specified.",
+      "description": "Deletes messages from multiple users' mailboxes in Azure based on the comma-separated list of users you have specified.",
       "operation": "del_message_bulk",
       "annotation": "del_message_bulk",
       "category": "investigation",
       "parameters": [
         {
           "title": "User List",
-          "description": "Specify a comma-separated list of users' mailboxes, which is a list of JSON objects, based on which you want to delete bulk messages in Azure. The format of the list is as follows: [ { 'user_id':\"\", 'message_id':\"\" }, { 'user_id':\"\", 'message_id':\"\" } ]",
+          "description": "Specify a comma-separated list of users' mailboxes, which is a list of JSON objects, based on which you want to delete bulk messages in Azure. The format of the list is as follows: [ { 'user_id':\"\", 'message_id':\"\" }, { 'user_id':\"\",'message_id':\"\" }]",
           "required": true,
           "editable": true,
           "visible": true,
           "type": "json",
           "value": [],
           "name": "user_list",
-          "tooltip": "Specify a comma-separated list of users mailboxes, which is a list of JSON objects, i.e., [{\"user_id\":\"\", \"message_id\":\"\"}, ...] based on which you want to delete bulk messages in Azure."
+          "tooltip": "Specify a comma-separated list of users' mailboxes, which is a list of JSON objects, based on which you want to delete bulk messages in Azure. The format of the list is as follows: [ { 'user_id':\"\", 'message_id':\"\" }, { 'user_id':\"\",'message_id':\"\" }]"
         }
       ],
       "output_schema": {
@@ -1478,13 +1478,13 @@
       "parameters": [
         {
           "title": "User ID or PrincipalName",
-          "description": "Specify the User ID or PrincipalName of the user whose refresh tokens you want to invalidate (revoke) from Microsoft Graph API.",
+          "description": "Specify the User ID or PrincipalName of the user whose refresh tokens you want to invalidate (revoke) from the Microsoft Graph API.",
           "required": true,
           "editable": true,
           "visible": true,
           "type": "text",
           "name": "user",
-          "tooltip": "Specify the User ID or PrincipalName of the user whose refresh tokens you want to invalidate (revoke) from Microsoft Graph API."
+          "tooltip": "Specify the User ID or PrincipalName of the user whose refresh tokens you want to invalidate (revoke) from the Microsoft Graph API."
         }
       ],
       "output_schema": {
@@ -1495,7 +1495,7 @@
     },
     {
       "title": "Get All Named Locations",
-      "description": "Retrieves a list of named location from Azure based on display name, sort order, and other input parameters that you have specified.",
+      "description": "Retrieves a list of named locations from Azure based on display name, sort order, and other input parameters that you have specified.",
       "operation": "get_all_named_locations",
       "annotation": "get_all_named_locations",
       "category": "investigation",
@@ -1529,7 +1529,7 @@
           "required": false,
           "visible": true,
           "editable": true,
-          "description": "Specify the display name of the named location to retrieve from Azure. ",
+          "description": "Specify the display name of the named location to retrieve from Azure.",
           "tooltip": "Specify the display name of the named location to retrieve from Azure."
         },
         {
@@ -1539,8 +1539,8 @@
           "required": false,
           "visible": true,
           "editable": true,
-          "description": "(Optional) Specify filters properties (columns) to retrieve only specified fields in response from Azure. You can choose one or more from ID, Display Name, Created Date Time and Modified Date Time",
-          "tooltip": "Specify filters properties (columns) to retrieve only specified fields in response from Azure.",
+          "description": "(Optional) Specify filter properties (columns) to retrieve only specified fields in the response from Azure. You can choose one or more from ID, Display Name, Created Date Time, and Modified Date Time.",
+          "tooltip": "(Optional) Select the sort order criterion to sort the results. Select the sorting order in the Sort Order field. You can choose from the following options: ID, Display Name, Created Date Time, Modified Date Time.",
           "options": [
             "ID",
             "Display Name",
@@ -1555,8 +1555,8 @@
           "required": false,
           "visible": true,
           "editable": true,
-          "description": "(Optional) Select the sort order criterion to sort the results. Select the sorting order in Sort Order field. You can choose from following options: ID, Display Name, Created Date Time or Modified Date Time",
-          "tooltip": "Orders results based on specified field.",
+          "description": "(Optional) Select the sort order criterion to sort the results. Select the sorting order in the Sort Order field. You can choose from the following options: ID, Display Name, Created Date Time, Modified Date Time.",
+          "tooltip": "(Optional) Select the sort order criterion to sort the results. Select the sorting order in the Sort Order field. You can choose from the following options: ID, Display Name, Created Date Time, Modified Date Time.",
           "options": [
             "ID",
             "Display Name",
@@ -1572,8 +1572,8 @@
                 "required": false,
                 "visible": true,
                 "editable": true,
-                "description": "(Optional) Orders the response Ascending or Descending order on specified field. By default it retrieves in ascending order.",
-                "tooltip": "Orders the response Ascending or Descending order on specified field. By default it retrieves in ascending order",
+                "description": "(Conditional - This field appears after selecting an order criterion in Order By field) Specify the sort order from the following options: Ascending, Descending By default, it retrieves named locations in ascending order.",
+                "tooltip": "This field appears after selecting an order criterion in Order By field) Specify the sort order from the following options: Ascending, Descending By default, it retrieves named locations in ascending order.",
                 "options": [
                   "Ascending",
                   "Descending"
@@ -1638,8 +1638,8 @@
           "required": false,
           "visible": true,
           "editable": true,
-          "description": "Select to retrieve the total count of named locations matched in Azure. By default it is set to false.",
-          "tooltip": "Select to retrieve the total count of named locations matched in Azure."
+          "description": "Select to retrieve the total count of named locations matched in Azure. By default, it is set to false.",
+          "tooltip": "Select to retrieve the total count of named locations matched in Azure. By default, it is set to false."
         },
         {
           "title": "Size",
@@ -1656,7 +1656,7 @@
           "title": "Offset",
           "type": "integer",
           "name": "skip",
-          "tooltip": "Specify the number of named locations you want to skip in this request.",
+          "tooltip": "(Optional) Specify the number of named locations you want to skip in this request.",
           "description": "(Optional) Specify the number of named locations you want to skip in this request.",
           "required": false,
           "editable": true,
@@ -1667,7 +1667,7 @@
     },
     {
       "title": "Block New IP Ranges",
-      "description": "Blocks IPv4 and IPv6 address ranges in specified NamedLocation in Azure.",
+      "description": "Blocks IPv4 and IPv6 address ranges in the specified NamedLocation in Azure.",
       "operation": "block_new_ips",
       "annotation": "block_new_ips",
       "category": "containment",
@@ -1694,8 +1694,8 @@
           "required": true,
           "visible": true,
           "editable": true,
-          "description": "Specify the unique Named Location ID for which you want block the IP addresses.",
-          "tooltip": "Specify the unique Named Location ID for which you want block the IP addresses."
+          "description": "Specify the unique Named Location ID for which you want to block the IP addresses.",
+          "tooltip": "Specify the unique Named Location ID for which you want to block the IP addresses."
         },
         {
           "title": "IPv4 Ranges",
@@ -1706,7 +1706,7 @@
           "editable": true,
           "placeholder": "e.g. 10.10.10.10/14, 10.10.10.10/13, 10.10.10.10/09",
           "description": "Specify IP address ranges in IPv4 CIDR format (1.2.3.4/32) to be blocked in the specified named location. You can specify multiple IPv4 ranges as comma-separated values. e.g. 10.10.10.10/14, 10.10.10.10/13, 10.10.10.10/09",
-          "tooltip": "Specify IP address ranges in IPv4 CIDR format (1.2.3.4/32) to be blocked in the specified named location. You can specify multiple IPv4 ranges as comma-separated values."
+          "tooltip": "Specify IP address ranges in IPv4 CIDR format (1.2.3.4/32) to be blocked in the specified named location. You can specify multiple IPv4 ranges as comma-separated values. e.g. 10.10.10.10/14, 10.10.10.10/13, 10.10.10.10/09"
         },
         {
           "title": "IPv6 Ranges",
@@ -1716,15 +1716,15 @@
           "visible": true,
           "placeholder": "e.g. 2001:db8::/43, 2001:db8::/47",
           "editable": true,
-          "description": "Specify IP address ranges in IPv6 format, as defined in IETF RFC5962, to be blocked in the specified named location. You can specify multiple IPv6 ranges as comma-separated values. For example: 2001:db8::/43, 2001:db8::/47",
-          "tooltip": "Specify IP address ranges in allowable IPv6 format, defined in IETF RFC5962, to be blocked in the specified named location. You can specify multiple IPv6 ranges as comma-separated values."
+          "description": "Specify IP address ranges in allowable IPv6 format, defined in IETF RFC5962, to be blocked in the specified named location. You can specify multiple IPv6 ranges as comma-separated values. e.g. 2001:db8::/43, 2001:db8::/47",
+          "tooltip": "Specify IP address ranges in allowable IPv6 format, defined in IETF RFC5962, to be blocked in the specified named location. You can specify multiple IPv6 ranges as comma-separated values. e.g. 2001:db8::/43, 2001:db8::/47"
         }
       ],
       "enabled": true
     },
     {
       "title": "Unblock IP Ranges",
-      "description": "Unblocks IPv4 and IPv6 address ranges in specified NamedLocation in Azure.",
+      "description": "Unblocks IPv4 and IPv6 address ranges in the specified NamedLocation in Azure.",
       "operation": "unblock_new_ips",
       "annotation": "unblock_new_ips",
       "category": "remediation",
@@ -1751,8 +1751,8 @@
           "required": true,
           "visible": true,
           "editable": true,
-          "description": "Specify the unique named location ID for which you want unblock the IP addresses.",
-          "tooltip": "Specify the unique Named Location ID for which you want unblock the IP addresses."
+          "description": "Specify the unique named location ID for which you want to unblock the IP addresses.",
+          "tooltip": "Specify the unique named location ID for which you want to unblock the IP addresses."
         },
         {
           "title": "IPv4 Ranges",
@@ -1763,7 +1763,7 @@
           "editable": true,
           "placeholder": "e.g. 10.10.10.10/14, 10.10.10.10/13, 10.10.10.10/09",
           "description": "Specify IP address ranges in IPv4 CIDR format (1.2.3.4/32) to be unblocked in the specified named location. You can specify multiple IPv4 ranges as comma-separated values. For example: 10.10.10.10/14, 10.10.10.10/13, 10.10.10.10/09",
-          "tooltip": "Specify IP address ranges in IPv4 CIDR format (1.2.3.4/32) to be unblocked in the specified named location. You can specify multiple IPv4 ranges as comma-separated values."
+          "tooltip": "Specify IP address ranges in IPv4 CIDR format (1.2.3.4/32) to be unblocked in the specified named location. You can specify multiple IPv4 ranges as comma-separated values. For example: 10.10.10.10/14, 10.10.10.10/13, 10.10.10.10/09"
         },
         {
           "title": "IPv6 Ranges",
@@ -1774,14 +1774,14 @@
           "placeholder": "e.g. 2001:db8::/43, 2001:db8::/47",
           "editable": true,
           "description": "Specify IP address ranges in IPv6 format, as defined in IETF RFC5962, to be unblocked in the specified named location. You can specify multiple IPv6 ranges as comma-separated values. For example: 2001:db8::/43, 2001:db8::/47",
-          "tooltip": "Specify IP address ranges in IPv6 format, as defined in IETF RFC5962, to be unblocked in the specified named location. You can specify multiple IPv6 ranges as comma-separated values."
+          "tooltip": "Specify IP address ranges in IPv6 format, as defined in IETF RFC5962, to be unblocked in the specified named location. You can specify multiple IPv6 ranges as comma-separated values. For example: 2001:db8::/43, 2001:db8::/47"
         }
       ],
       "enabled": true
     },
     {
       "title": "Create IP Named Location",
-      "description": "Creates a new IP named location in Azure based on specified input parameter.",
+      "description": "Creates a new IP named location in Azure based on the specified input parameter.",
       "operation": "create_ip_range_location",
       "annotation": "create_ip_range_location",
       "category": "investigation",
@@ -1826,7 +1826,7 @@
           "editable": true,
           "placeholder": "e.g. 10.10.10.10/14, 10.10.10.10/13, 10.10.10.10/09",
           "description": "Specify IP address ranges in IPv4 CIDR format (1.2.3.4/32) to be added in the specified named location. You can specify multiple IPv4 ranges as comma-separated values. For example: 10.10.10.10/14, 10.10.10.10/13, 10.10.10.10/09",
-          "tooltip": "Specify IP address ranges in IPv4 CIDR format (1.2.3.4/32) to be added in the specified named location. You can specify multiple IPv4 ranges as comma-separated values. e.g. 10.10.10.10/14, 10.10.10.10/13, 10.10.10.10/09"
+          "tooltip": "Specify IP address ranges in IPv4 CIDR format (1.2.3.4/32) to be added in the specified named location. You can specify multiple IPv4 ranges as comma-separated values. For example: 10.10.10.10/14, 10.10.10.10/13, 10.10.10.10/09"
         },
         {
           "title": "IPv6 Ranges",
@@ -1837,7 +1837,7 @@
           "placeholder": "e.g. 2001:db8::/43, 2001:db8::/47",
           "editable": true,
           "description": "Specify IP address ranges in IPv6 format, as defined in IETF RFC5962, to be added in the specified named location. You can specify multiple IPv6 ranges as comma-separated values. For example: 2001:db8::/43, 2001:db8::/47",
-          "tooltip": "Specify IP address ranges in allowable IPv6 format, defined in IETF RFC5962, to be added in the specified named location. You can specify multiple IPv6 ranges as comma-separated values. e.g. 2001:db8::/43, 2001:db8::/47"
+          "tooltip": "Specify IP address ranges in IPv6 format, as defined in IETF RFC5962, to be added in the specified named location. You can specify multiple IPv6 ranges as comma-separated values. For example: 2001:db8::/43, 2001:db8::/47"
         }
       ],
       "enabled": true
